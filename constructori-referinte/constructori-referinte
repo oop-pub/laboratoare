@@ -395,7 +395,7 @@ Exercițiile se rezolvă în ordine.
     * un constructor care să primească cele două numere reale (de tip ''float'') ce reprezintă coordonatele.
     * o metodă ''changeCoords'' ce primește două numere reale și modifică cele două coordonate ale punctului.
     * o funcție de afișare a unui punct astfel: ''(x, y)''.
-  - (**2p**) Să se implementeze o clasă ''Poligon'' cu următoarele:
+  - (**2p**) Să se implementeze o clasă ''Polygon'' cu următoarele:
     * un constructor care preia ca parametru un singur număr //n// (reprezentând numărul de colțuri al poligonului) și alocă spațiu pentru puncte (un punct reprezentând o instanță a clasei ''Punct'').
     * un constructor care preia ca parametru un vector, cu //2n// numere reale reprezentând colțurile. Acest constructor apelează constructorul de la punctul de mai sus și completează vectorul de puncte cu cele //n// instanțe ale clasei ''Punct'' obținute din parametrii primiți.
       * La final, afișați coordonatele poligonului utilizând metodă de afișare a clasei ''Point''.
