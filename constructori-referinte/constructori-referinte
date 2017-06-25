@@ -391,14 +391,14 @@ Exercițiile se rezolvă în ordine.
 
 </note>
 
-  - (**1p**) Să se implementeze o clasă ''Punct'' care să conțină:
+  - (**1p**) Să se implementeze o clasă ''Point'' care să conțină:
     * un constructor care să primească cele două numere reale (de tip ''float'') ce reprezintă coordonatele.
     * o metodă ''changeCoords'' ce primește două numere reale și modifică cele două coordonate ale punctului.
     * o funcție de afișare a unui punct astfel: ''(x, y)''.
   - (**2p**) Să se implementeze o clasă ''Poligon'' cu următoarele:
     * un constructor care preia ca parametru un singur număr //n// (reprezentând numărul de colțuri al poligonului) și alocă spațiu pentru puncte (un punct reprezentând o instanță a clasei ''Punct'').
     * un constructor care preia ca parametru un vector, cu //2n// numere reale reprezentând colțurile. Acest constructor apelează constructorul de la punctul de mai sus și completează vectorul de puncte cu cele //n// instanțe ale clasei ''Punct'' obținute din parametrii primiți.
-      * La final, afișați coordonatele poligonului utilizând metodă de afișare a clasei ''Punct''.
+      * La final, afișați coordonatele poligonului utilizând metodă de afișare a clasei ''Point''.
   - (**1p**) Testați diferența de viteză introdusă de crearea de noi obiecte. Măsurați diferența între folosirea ''new Integer(2+3)'' și ''2+3'', după modelul de mai jos:
     * <code java>
 private long run() {
@@ -407,7 +407,7 @@ private long run() {
     return System.nanoTime() - start;
 }
 </code>
-  - (**1p**) Testați diferența de memorie utilizată între a folosi String literal și String obținut prin constructor. Construiți un vector de String. Umpleți acest vector în primă fază cu literal-ul ''"abc"'' și măsurați memoria utilizată. Apoi, umpleți vectorul cu ''new Strîng("abc")'' și măsurați memoria utilizată. Măsurarea memoriei utilizate se poate face folosind următoarea metodă:
+  - (**1p**) Testați diferența de memorie utilizată între a folosi String literal și String obținut prin constructor. Construiți un vector de String. Umpleți acest vector în primă fază cu literal-ul ''"abc"'' și măsurați memoria utilizată. Apoi, umpleți vectorul cu ''new String("abc")'' și măsurați memoria utilizată. Măsurarea memoriei utilizate se poate face folosind următoarea metodă:
     * <code java>
 public void showUsedMemory() {
     long usedMem = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
