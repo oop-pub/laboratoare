@@ -1,0 +1,284 @@
+= Clase abstracte și interfețe =
+* Responsabili: Laurentiu Piciu, Theodor Stoican
+* Data publicării: 26.10.2016
+* Data ultimei modificări: 28.10.2016
+== Introducere ==
+
+Fie următorul exemplu (Thinking in Java) care propune o ierarhie de clase pentru a descrie o suită de instrumente muzicale, cu scopul demonstrării polimorfismului:
+{{ laboratoare:clase-abstracte-interfete:instrument.jpg }}
+Clasa ''Instrument'' nu este instanţiată niciodată pentru că scopul său este de a stabili o interfaţă comună pentru toate clasele derivate. În același sens, metodele clasei de bază nu vor fi apelate niciodată. Apelarea lor este ceva greșit din punct de vedere conceptual.
+== Clase abstracte ==
+
+Dorim să stabilim interfaţa comună pentru a putea crea funcţionalitate diferită pentru fiecare subtip și pentru a ști ce anume au clasele derivate în comun.
+O clasă cu caracteristicile enumerate mai sus se numește **abstractă**. Creăm o clasă abstractă atunci când dorim să:
+* manipulăm un set de clase printr-o **interfaţă comună**
+* **reutilizăm** o serie metode si membrii din această clasă in clasele derivate.
+Metodele suprascrise în clasele derivate vor fi apelate folosind [[http://en.wikipedia.org/wiki/Dynamic_binding_%28computer_science%29|dynamic binding]] (late binding). Acesta este un mecanism prin care compilatorul, în momentul în care nu poate determina implementarea unei metode în avans, lasă la latitudinea JVM-ului (mașinii virtuale) alegerea implementării potrivite, în funcţie de tipul real al obiectului. Această legare a implementării de numele metodei la **momentul execuţiei** stă la baza polimorfismului.
+**Nu există instanţe** ale unei clase abstracte, aceasta exprimând doar un punct de pornire pentru definirea unor instrumente reale. De aceea, crearea unui obiect al unei clase abstracte este o eroare, compilatorul Java semnalând acest fapt.
+
+== Metode abstracte ==
+
+Pentru a exprima faptul că o metodă este abstractă (adică se declară doar interfaţa ei, nu și implementarea), Java folosește cuvântul cheie ''abstract'':
+<code java>abstract void f()</code>
+O clasă care conţine **metode abstracte** este numită **clasă abstractă**. Dacă o clasă are una sau mai multe metode abstracte atunci ea trebuie să conţină în definiţie cuvântul ''abstract''.
+
+Exemplu:
+<code java>abstract class Instrument {
+...
+}</code>
+Deoarece o clasă abstractă este incompletă (există metode care nu sunt definite), crearea unui obiect de tipul clasei este împiedicată de compilator.
+
+== Clase abstracte în contextul moștenirii ==
+O clasă care moștenește o clasă abstractă este ea însăși abstractă daca nu implementează **toate** metodele abstracte ale clasei de bază. Putem defini clase abstracte care moștenesc alte clase abstracte ș.a.m.d. O clasă care poate fi instanţiată (adică nu este abstractă) și care moștenește o clasă abstractă trebuie să implementeze (definească) toate metodele abstracte pe lanţul moștenirii (ale tuturor claselor abstracte care îi sunt "părinţi").
+Este posibil să declarăm o **clasă abstractă fără** ca ea să aibă **metode abstracte**. Acest lucru este folositor când declarăm o clasă pentru care nu dorim instanţe (nu este corect conceptual să avem obiecte de tipul acelei clase, chiar dacă definiţia ei este completă).
+Iată cum putem să modificăm exemplul instrument cu metode abstracte:
+{{:laboratoare:clase-abstracte-interfete:claseabstracteincontextlmostenirii.jpg?linkonly|Modificare exemplu instrument}}
+== Interfeţe ==
+Interfeţele duc conceptul **abstract** un pas mai departe. Se poate considera că o interfaţă este o **clasă abstractă pură**: permite programatorului să stabilească o "formă" pentru o clasă: numele metodelor, lista de argumente, valori întoarse, dar fară **nicio implementare**. O interfaţă poate conţine **câmpuri** dar acestea sunt în mod implicit **static** și **final**.
+Interfaţa este folosită pentru a descrie un protocol între clase: o clasă care implementează o interfaţă va implementa metodele definite în interfaţă. Astfel orice cod care folosește o anumită interfaţă știe ce metode pot fi apelate pentru aceasta.
+Pentru a crea o interfaţă folosim cuvântul cheie **interface** în loc de **class**. La fel ca în cazul claselor, interfaţa poate fi declarată ''public'' doar dacă este definită într-un fișier cu același nume ca cel pe care îl dăm acesteia. Dacă o interfaţă nu este declarată ''public'' atunci specificatorul ei de acces este ''package-private''.
+Pentru a defini o **clasă** care este conformă cu o interfaţă anume folosim cuvântul cheie **implements**. Această relaţie este asemănătoare cu moștenirea, cu diferenţa că nu se moștenește comportament, ci doar "interfaţa".
+Pentru a defini o **interfaţă** care moștenește altă interfaţă folosim cuvântul cheie **extends**.
+Dupa ce o interfaţă a fost implementată, acea implementare devine o clasă obișnuită care poate fi extinsă prin moștenire.
+Iata exemplul dat mai sus, modificat pentru a folosi interfeţe:
+
+{{ laboratoare:clase-abstracte-interfete:interfete.jpg?linkonly |Exemplu folosind interfeţe}}
+
+Codul arată astfel:
+<code java>
+interface Instrument {
+
+    // Compile-time constant:
+    int i = 5; // static & final
+
+    // Cannot have method definitions:
+    void play(); // Automatically public
+    String what();
+    void adjust();
+}
+
+class WindInstrument implements Instrument {
+
+    public void play() {
+        System.out.println("WindInstrument.play()");
+    }
+
+    public String what() {
+        return "WindInstrument";
+    }
+
+    public void adjust() {}
+}
+
+class Trumpet extends WindInstrument {
+
+    public void play() {
+        System.out.println("Trumpet.play()");
+    }
+
+    public void adjust() {
+        System.out.println("Trumpet.adjust()");
+    }
+}
+</code>
+
+Implicit, specificatorul de acces pentru membrii unei interfeţe este **public**. Atunci când implementăm o interfaţă trebuie să specificăm că funcţiile sunt public chiar dacă în interfaţă ele nu au fost specificate explicit astfel. Acest lucru este necesar deoarece specificatorul de acces implicit în clase este ''package-private'', care este **mai restrictiv** decât ''public''.
+== Moștenire multiplă în Java ==
+Interfaţa nu este doar o formă "pură" a unei clase abstracte, ci are un scop mult mai înalt. Deoarece o interfaţă nu specifică niciun fel de implementare (nu există nici un fel de spaţiu de stocare pentru o interfaţă) este normal să "combinăm" mai multe interfeţe. Acest lucru este folositor atunci când dorim să afirmăm că "X este un A, un B si un C". Acest deziderat este moștenirea multiplă și, datorită faptului ca o singură entitate (A, B sau C) are implementare, nu apar problemele moștenirii multiple din C++.
+
+{{ laboratoare:clase-abstracte-interfete:mosteniremultipla.jpg?linkonly |Moștenire multiplă}}
+
+<code java>
+interface CanFight {
+    void fight();
+}
+
+interface CanSwim {
+    void swim();
+}
+
+interface CanFly {
+    void fly();
+}
+
+class ActionCharacter {
+    public void fight() {}
+}
+
+class Hero extends ActionCharacter implements CanFight, CanSwim, CanFly {
+    public void swim() {}
+
+    public void fly() {}
+}
+
+public class Adventure {
+    static void t(CanFight x) {
+        x.fight();
+    }
+
+    static void u(CanSwim x) {
+        x.swim();
+    }
+
+    static void v(CanFly x) {
+        x.fly();
+    }
+
+    static void w(ActionCharacter x) {
+        x.fight();
+    }
+
+    public static void main(String[] args) {
+
+        Hero h = new Hero();
+
+        t(h); // Treat it as a CanFight
+
+        u(h); // Treat it as a CanSwim
+
+        v(h); // Treat it as a CanFly
+
+        w(h); // Treat it as an ActionCharacter
+    }
+}
+</code>
+Se observă că ''Hero'' combină clasa ''ActionCharacter'' cu interfeţele ''CanSwim'' etc. Acest lucru se realizează specificând prima data clasa concretă (sau abstractă) (extends) și abia apoi ''implements''.
+Metodele clasei ''Adventure'' au drept parametri interfeţele ''CanSwin'' etc. si clasa ''ActionCharacter''. La fiecare apel de metodă din ''Adventure'' se face **upcast** de la obiectul ''Hero'' la clasa sau interfaţa dorită de metoda respectivă.
+
+== Coliziuni de nume la combinarea interfeţelor ==
+Combinarea unor interfețe care conţin o metodă cu același nume este posibilă doar dacă metodele nu au tipuri întoarse diferite și aceeași listă de argumente. Totuși este preferabil ca în interfețe diferite care trebuie combinate să nu existe metode cu același nume deoarece acest lucru poate duce la confuzii evidente (sunt amestecate în acest mod 3 concepte: ''overloading'', ''overriding'' și ''implementation'').
+
+== Extinderea interfeţelor ==
+Se pot adăuga cu ușurinţă metode noi unei interfeţe prin extinderea ei într-o altă interfaţă:
+
+Exemplu:
+<code java>
+interface Monster {
+    void menace();
+}
+
+interface DangerousMonster extends Monster {
+    void destroy();
+}
+</code>
+Deoarece câmpurile unei interfeţe sunt automat **static** și **final**, interfeţele sunt un mod convenabil de a crea grupuri de constante, asemănătoare cu ''enum-urile'' din C , C++.
+
+== Iniţializarea câmpurilor în interfeţe ==
+În interfeţe **nu** pot exista **blank finals** (câmpuri ''final'' neiniţializate) însă pot fi iniţializate cu **valori neconstante**. Câmpurile fiind statice, ele vor fi iniţializate prima oară când clasa este iniţializată.
+
+== Exerciţii ==
+1. (**2p**) Implementaţi interfaţa <code java Task.java>
+public interface Task {
+
+	/**
+	 * Executes the action characteristic of the task
+	 */
+	void execute();
+
+}</code>
+în cele 3 moduri de mai jos. La crearea claselor în Eclipse, utilizaţi interfaţa vizuală pentru precizarea interfeţelor ce se doresc implementate (metodele corespunzătoare vor fi adăugate automat).
+* Un task care să afișeze un mesaj la output. Mesajul este specificat în constructor.
+* Un task care generează un număr aleator și afișează un mesaj cu numărul generat la output. Generarea se face în constructor
+* Un task care incrementează un contor global și afișează valoarea contorului după fiecare incrementare.**Notă**: Acesta este un exemplu simplu pentru [[http://en.wikipedia.org/wiki/Command_pattern|Command Pattern]]
+
+2. (**3p**) Interfaţa <code java Container.java>
+public interface Container {
+
+	/**
+	 * Removes a Task from the Container
+	 * @return  the removed Task, if the Container is not empty;
+         *          null, otherwise
+	 */
+	Task pop();
+
+	/**
+	 * Inserts a Task in the Container
+	 * @param task the inserted Task
+	 */
+	void push(Task task);
+
+	/**
+	 * Returns the number of elements from the Container
+	 * @return
+	 */
+	int size();
+
+	/**
+	 * Verifies if the Container is empty or not.
+	 * @return  true,  if the Container is empty
+         *          false, otherwise
+	 */
+	boolean isEmpty();
+
+
+	/**
+	 * Transfers all the elements that exist in a Containter in this Container
+	 * @param container the Container from which we should transfer elements.
+         *        After the transfer, container.size() == 0
+	 */
+	void transferFrom(Container container);
+}
+</code>
+specifică interfaţa comună pentru colecţii de obiecte Task, în care se pot adăuga și din care se pot elimina elemente. Creaţi două tipuri de containere care implementează această clasă:
+1. (**1.5p**) ''Stack'' - care implementează o strategie de tip [[http://en.wikipedia.org/wiki/LIFO_(computing)|LIFO]]
+
+2. (**1.5p**) ''Queue'' - care implementează o strategie de tip [[http://en.wikipedia.org/wiki/FIFO|FIFO]]
+
+**Evitaţi codul similar** în locuri diferite!
+
+**Hint**: Puteţi reţine intern colecţia de obiecte, utilizând clasa [[http://docs.oracle.com/javase/6/docs/api/java/util/ArrayList.html|ArrayList]] din biblioteca Java, ce va fi folosită asemănător clasei ''MyArrayList'' din ''Laborator 2''. Iată un exemplu de iniţializare pentru șiruri:
+ <code java>
+ArrayList<String> list = new ArrayList<String>();
+</code>
+
+3. (**1p**) Implementaţi interfaţa <code java IFactory.java>
+public interface IFactory {
+
+	/**
+	 * Creates a Container which implements the strategy given as a parameter.
+	 * @param strategy The required Strategy.
+	 * @return a Container which respects the strategy given as a parameter.
+	 */
+	Container createContainer(Strategy strategy);
+
+}
+</code>
+care conţine o metodă ce primește ca parametru o strategie -
+<code java Strategy.java>
+
+/**
+ * Enumerates the types of strategies for the containters.
+ * @author marius-andrei
+ *
+ */
+public enum Strategy {
+	FIFO, LIFO
+}
+</code>
+și care întoarce un container asociat acelei strategii. Din acest punct înainte, în programul vostru veţi crea containere folosind doar această clasă (nu puteţi crea direct obiecte de tip Stack sau Queue). **Evitaţi** instanţierea clasei Factory implementate de voi la fiecare creare a unui container!
+**Notă**:Acest mod de a crea obiecte de tip Container elimină problema care apare în momentul în care decidem să folosim o implementare diferită pentru un anumit tip de strategie și nu vrem să facem modificări și în restul programului. De asemenea o astfel de abordare este utilă când avem implementări care urmăresc scopuri diferite (putem avea un Factory care să creeze containere optimizate pentru viteză sau un Factory cu containere ce folosesc minimum de memorie). șablonul acesta de programare poartă denumirea de [[http://en.wikipedia.org/wiki/Factory_method_pattern|Factory Method Pattern]].
+
+4. (**3p**)
+Creaţi clasa ''AbstractTaskRunner'' care execută ''Task-uri'', ce va conţine:
+* Un constructor ce primește ca parametru o strategie prin care se specifică în ce ordine se vor executa task-urile (LIFO sau FIFO)
+* O metodă ''addTask'', care adaugă un task în colecţia de task-uri de executat
+* O metodă ''executeAll'', care execută toate task-urile din colecţia de task-uri
+* După execuţia fiecărui task va avea loc o acţiune - acţiune abstractă, specifică claselor care moștenesc ''AbstractTaskRunner'' (vezi ex. urmator). Metoda abstractă care specifică această acţiune trebuie să fie **vizibilă** doar pentru clasele din lanţul de moștenire ce pornește din ''AbstractTaskRunner''.
+
+5. (**4p**) Extindeţi clasa ''AbstractTaskRunner'' în 3 moduri:
+* (**1p**) ''PrintTaskRunner'' - care afișează un mesaj după execuţia unui task în care se specifică ora la care s-a executat task-ul (vezi clasa [[https://docs.oracle.com/javase/7/docs/api/java/util/Calendar.html|Calendar]]).
+* (**1p**)  ''CountTaskRunner'' -  incrementează un contor local care ţine minte câte task-uri s-au executat.
+* (**1p**) ''RedoTaskRunner'' - salvează fiecare task executat într-un container în ordinea inversă a execuţiei și are o metodă prin care se permite reexecutarea task-urilor.
+* (**1p**) Extindeţi ''PrintTaskRunner'' astfel încât să se introducă o întârziere între execuţiile task-urilor. Întârzierea este specificată în constructor. Pentru introducerea unei întârzieri în execuţia programului puteţi utiliza secvența de mai jos:
+<code java>
+try {
+    Thread.sleep(1000); // miliseconds
+} catch (InterruptedException e) {
+    e.printStackTrace();
+}
+</code>
+== Resurse ==
+
+* {{laboratoare:clase-abstracte-interfete:lab4_schelet.zip|Schelet}}
+* {{laboratoare:clase-abstracte-interfete:lab4-sol.zip|Solutie}}
+* <html><a class="media mediafile mf_pdf" href="/poo/laboratoare/clase-abstracte-interfete?do=export_pdf">PDF laborator</a></html>
