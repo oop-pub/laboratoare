@@ -296,7 +296,7 @@ Având în vedere că au fost oferite exemple de cod în acest laborator, puteț
      Scanner s = new Scanner(System.in);
      String title = s.nextLine();
       </code>
-   -  Verificați ca numărul de pagini introdus să fie diferit de zero. Puteți consulta documentația claselor ''[[https://docs.oracle.com/javase/8/docs/api/java/lang/String.html |String]]'' și ''[[https://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html |Integer]]''.
+   -  Verificați ca numărul de pagini introdus să fie mai mare strict decât de zero. Puteți consulta documentația claselor ''[[https://docs.oracle.com/javase/8/docs/api/java/lang/String.html |String]]'' și ''[[https://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html |Integer]]''.
   -  (**3p**) Verificări cărți
      -  Creați o clasă nouă, ''BookstoreCheck'', ce va conține două metode, cu câte 2 parametri de tipul ''Book''.
         * Prima metodă va verifica dacă o carte este în dublu exemplar, caz în care va întoarce adevărat.
