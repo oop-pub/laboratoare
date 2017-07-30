@@ -1,4 +1,6 @@
 *.class
+!exceptii/skel/Forms/Forms.class
+!exceptii/skel/Forms/GeometricForms.class
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
