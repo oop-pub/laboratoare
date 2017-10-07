@@ -1,8 +1,8 @@
 = Java basics =
 
-* Responsabil: Laurențiu Stamate, Miruna Barbu
-* Data publicării: 09.10.2016
-* Data ultimei modificări: 08.10.2016
+* Responsabil: Laurențiu Stamate
+* Data publicării: 02.10.2017
+* Data ultimei modificări: 07.10.2017
 
 ==Organizarea unui proiect Java==
 În cadrul acestui laborator veți avea de ales între a folosi [[https://www.jetbrains.com/idea/|IntelliJ IDEA]] ([[resurse-utile:instalare-intellij-idea|tutorial instalare]]) folosind contul de mail de la facultate ([[resurse-utile:activare-intellij-idea|tutorial activare]]) sau [[https://eclipse.org/|Eclipse]] ([[resurse-utile:instalare-eclipse|tutorial instalare]]). Primul pas este să vă familiarizați cu structura unui proiect și a unui fișier sursă Java.
@@ -319,4 +319,4 @@ Cu următoarele precizări:
 * Numele autorului rămânând **neschimbat**
 
 
-**[[Media:sol-java-basics.zip‎|Soluție]]**
+**[[:laboratoare:java-basics:java-basics-sol.zip | Soluție]]**
