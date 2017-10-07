@@ -1,8 +1,8 @@
 = Constructori și referințe =
 
-* Responsabil: Miruna Barbu, Theodor Stoican
-* Data publicării: 15.10.2016
-* Data ultimei modificări: 15.10.2016
+* Responsabil: Laurențiu Stamate
+* Data publicării: 07.10.2017
+* Data ultimei modificări: 07.10.2017
 
 == Obiective ==
 
@@ -25,32 +25,36 @@ Crearea unui obiect se face cu sintaxa:
 class MyClass {
    ...
 }
-...
-// constructor call
-instanceObject = new MyClass(param_1, param_2, ..., param_n);
-</code>
 
+...
+
+MyClass instanceObject;
+
+// constructor call
+instanceObject = new MyClass(param_1, param_2, ..., param_n); 
+</code>
+  
 Se poate combina declararea unui obiect cu crearea lui propriu-zisă printr-o sintaxă de tipul:
 
 <code java5>
 // constructor call
-MyClass instanceObject = new MyClass(param_1, param_2, ..., param_n);
+MyClass instanceObject = new MyClass(param_1, param_2, ..., param_n); 
 </code>
 
-De reținut că, în terminologia POO, obiectul creat în urma apelului unui constructor al unei clase poartă numele de **instanță** a clasei respective. Astfel, spunem că ''instanceObject'' reprezintă o ''instanţă'' a clasei ''MyClass''.
+De reținut că, în terminologia POO, obiectul creat în urma apelului unui constructor al unei clase poartă numele de **instanță** a clasei respective. Astfel, spunem că ''instanceObject'' reprezintă o ''instanţă'' a clasei ''MyClass''. 
 
-Să urmărim în continuare codul:
+Să urmărim în continuare codul: 
 
-<code java5>
-String myFirstString, mySecondString;
+<code java5> 
+String myFirstString, mySecondString; 
 
-myFirstString = new String();
-mySecondString = "This is my second string";
-</code>
+myFirstString = new String(); 
+mySecondString = "This is my second string"; 
+</code> 
 
-Acesta creează întâi un obiect de tip ''String'' folosind constructorul fără parametru (alocă spațiu de memorie și efectuează inițializările specificate în codul constructorului), iar apoi creează un alt obiect de tip ''String'' pe baza unui șir de caractere constant.
+Acesta creează întâi un obiect de tip ''String'' folosind constructorul fără parametru (alocă spațiu de memorie și efectuează inițializările specificate în codul constructorului), iar apoi creează un alt obiect de tip ''String'' pe baza unui șir de caractere constant. 
 
-Clasele pe care le-am creat până acum însă nu au avut nici un constructor. În acest caz, Java crează automat un **constructor implicit** (în terminologia POO, **default constructor**) care face iniţializarea câmpurilor neinițializate, astfel:
+Clasele pe care le-am creat până acum însă nu au avut nici un constructor. În acest caz, Java crează automat un **constructor implicit** (în terminologia POO, **default constructor**) care face iniţializarea câmpurilor neinițializate, astfel: 
 	* referințele la obiecte se inițializează cu ''null''
 	* variabilele de tip numeric se inițializează cu ''0''
 	* variabilele de tip logic (''boolean'') se inițializează cu ''false''
@@ -65,7 +69,6 @@ public class SomeClass {
     public String getName() {
         return name;
     }
-
 }
 
 class Test {
@@ -74,7 +77,6 @@ class Test {
         SomeClass instance = new SomeClass();
         System.out.println(instance.getName());
     }
-
 }
 </code>
 
@@ -117,10 +119,9 @@ public class Student {
     }
 
     // (5) getter for the field 'name'
-    public String getName() {
-        return name;
+    public String getName() { 
+        return name; 
     }
-
 }
 </code>
 
@@ -139,7 +140,7 @@ st = new Student("Gigel");    // third constructor call (3)
 </code>
 
 <note important>
-**Atenție!** Dacă într-o clasă se definesc **doar** constructori cu parametri, constructorul default, fără parametri, **nu** va mai fi vizibil! Exemplul următor va genera eroare la compilare:
+**Atenție!** Dacă într-o clasă se definesc **doar** constructori cu parametri, constructorul default, fără parametri, **nu** va mai fi vizibil! Exemplul următor va genera eroare la compilare: 
 </note>
 
 <code java5>
@@ -157,36 +158,35 @@ class Student {
         // ERROR: the implicit constructor is hidden by the constructor with parameters
         Student s = new Student();
     }
-
 }
 </code>
 
 == Referințe. Implicații în transferul de parametri ==
-
+  
 După cum știți din [[laboratoare:java-basics|laboratorul 1]], obictele se alocă pe ''heap''. Pentru ca un obiect să poată fi folosit, este necesară cunoașterea adresei lui. Această adresă, așa cum știm din limbajul C, se reține într-un **pointer**.
 
-Limbajul Java nu permite lucrul direct cu pointeri, deoarece s-a considerat că această facilitate introduce o complexitate prea mare, de care programatorul poate fi scutit. Totuși, în Java există noțiunea de **referinţe** care înlocuiesc pointerii, oferind un mecanism de gestiune transparent.
+Limbajul Java nu permite lucrul direct cu pointeri, deoarece s-a considerat că această facilitate introduce o complexitate prea mare, de care programatorul poate fi scutit. Totuși, în Java există noțiunea de **referinţe** care înlocuiesc pointerii, oferind un mecanism de gestiune transparent. 
 
-Astfel, declararea unui obiect:
+Astfel, declararea unui obiect: 
 
-<code java5>
-Student st;
-</code>
+<code java5> 
+Student st; 
+</code> 
 
-creează o referință care poate indica doar către o zonă de memorie inițializată cu patternul clasei ''Student'' fără ca memoria respectivă să conțină date utile. Astfel, dacă după declarație facem un acces la un câmp sau apelăm o funcție-membru, compilatorul va semnala o eroare, deoarece referința nu indică încă spre vreun obiect din memorie. Alocarea efectivă a memoriei și inițializarea acesteia se realizează prin apelul constructorului împreună cu cuvântul-cheie **new**.
+creează o referință care poate indica doar către o zonă de memorie inițializată cu patternul clasei ''Student'' fără ca memoria respectivă să conțină date utile. Astfel, dacă după declarație facem un acces la un câmp sau apelăm o funcție-membru, compilatorul va semnala o eroare, deoarece referința nu indică încă spre vreun obiect din memorie. Alocarea efectivă a memoriei și inițializarea acesteia se realizează prin apelul constructorului împreună cu cuvântul-cheie **new**. 
 
-Managementul transparent al pointerilor implică un proces automat de alocare și eliberare a memoriei. Eliberarea automată poartă și numele de **Garbage Collection**, iar pentru Java există o componentă separată a JRE-ului care se ocupă cu eliberarea memoriei ce nu mai este utilizată.
+Managementul transparent al pointerilor implică un proces automat de alocare și eliberare a memoriei. Eliberarea automată poartă și numele de **Garbage Collection**, iar pentru Java există o componentă separată a JRE-ului care se ocupă cu eliberarea memoriei ce nu mai este utilizată. 
 
-Un fapt ce merită discutat este semnificația **atribuirii** de referințe. În exemplul de mai jos:
+Un fapt ce merită discutat este semnificația **atribuirii** de referințe. În exemplul de mai jos: 
 
-<code java5>
+<code java5> 
 Student s1 = new Student("Bob", 6);
 
 s2 = s1;
 s2.averageGrade = 10;
 
 System.out.println(s1.averageGrade);
-</code>
+</code> 
 
 se va afișa **10**.
 
@@ -194,11 +194,11 @@ se va afișa **10**.
 Motivul este că **s1** și **s2** sunt două referințe către **ACELASI** obiect din memorie. Orice modificare făcută asupra acestuia prin una din referințele sale va fi vizibilă în urma accesului prin orice altă referință către el.
 </note>
 
-În concluzie, atribuirea de referințe **nu** creează o copie a obiectului, cum s-ar fi putut crede inițial. Efectul este asemănător cu cel al atribuirii de pointeri în C.
+În concluzie, atribuirea de referințe **nu** creează o copie a obiectului, cum s-ar fi putut crede inițial. Efectul este asemănător cu cel al atribuirii de pointeri în C. 
 
-**Transferul parametrilor** la apelul de funcții este foarte important de înțeles. Astfel:
-* pentru tipurile primitive se transfera prin **COPIERE** pe stivă: orice modificare în funcția apelată **NU VA FI VIZIBILĂ** în urma apelului.
-* pentru tipurile definite de utilizator și instanțe de clase în general, se **COPIAZĂ REFERINȚA** pe stivă: referința indică spre zona de memorie a obicetului, astfel că schimbările asupra câmpurilor vor fi vizibile după apel, dar reinstanțieri (expresii de tipul: ''st = new Student()'') în apelul funcției și modificările făcute după ele, **NU VOR FI VIZIBILE** după apel, deoarece ele modifică o copie a referinței originale.
+**Transferul parametrilor** la apelul de funcții este foarte important de înțeles. Astfel: 
+* pentru tipurile primitive se transfera prin **COPIERE** pe stivă: orice modificare în funcția apelată **NU VA FI VIZIBILĂ** în urma apelului. 
+* pentru tipurile definite de utilizator și instanțe de clase în general, se **COPIAZĂ REFERINȚA** pe stivă: referința indică spre zona de memorie a obicetului, astfel că schimbările asupra câmpurilor vor fi vizibile după apel, dar reinstanțieri (expresii de tipul: ''st = new Student()'') în apelul funcției și modificările făcute după ele, **NU VOR FI VIZIBILE** după apel, deoarece ele modifică o copie a referinței originale. 
 
 <code java5 TestParams.java>
 
@@ -220,31 +220,30 @@ class TestParams {
         changeObject(s);                    // 2
         System.out.println(s.averageGrade); // 2'
     }
-
 }
 </code>
-
+  
 Astfel, apelul (1) nu are nici un efect în metoda ''main'' pentru că metoda ''changeReference'' are ca efect asignarea unei noi valori referinței ''s'', copiată pe stivă. Linia (1') va afișa textul: ''Alice''.
-{{ :laboratoare:constructori-referinte:poza1.png?600 |}}
+{{ :laboratoare:constructori-referinte:poza1.png?600 |}} 
 
 Apelul (2) metodei ''changeObject'' are ca efect modificarea structurii interne a obiectului referit de ''s'' prin schimbarea valorii atributului ''averageGrade''. Linia (2') va afișa textul: ''10''.
 {{ :laboratoare:constructori-referinte:poza2.png?600 |}}
 
-== Cuvântul-cheie "this". Întrebuințări ==
+== Cuvântul-cheie "this". Întrebuințări == 
 
-Cuvântul cheie ''this'' se referă la instanța curentă a clasei și poate fi folosit de metodele, care nu sunt statice, ale unei clase pentru a referi obiectul curent. Apelurile de funcții membru din interiorul unei funcții aparținând aceleiași clase se fac direct prin nume. Apelul de funcții aparținând unui alt obiect se face prefixând apelul de funcție cu numele obiectului. Situația este aceeași pentru datele membru.
+Cuvântul cheie ''this'' se referă la instanța curentă a clasei și poate fi folosit de metodele, care nu sunt statice, ale unei clase pentru a referi obiectul curent. Apelurile de funcții membru din interiorul unei funcții aparținând aceleiași clase se fac direct prin nume. Apelul de funcții aparținând unui alt obiect se face prefixând apelul de funcție cu numele obiectului. Situația este aceeași pentru datele membru. 
+  
+Totuși, unele funcții pot trimite un parametru cu același nume ca și un câmp membru. În aceste situații, se folosește cuvântul cheie ''this'' pentru //dezambiguizare//, el prefixând denumirea câmpului când se dorește utilizarea acestuia. Acest lucru este necesar pentru că în Java este comportament default ca un nume de parametru să ascundă numele unui câmp. 
 
-Totuși, unele funcții pot trimite un parametru cu același nume ca și un câmp membru. În aceste situații, se folosește cuvântul cheie ''this'' pentru //dezambiguizare//, el prefixând denumirea câmpului când se dorește utilizarea acestuia. Acest lucru este necesar pentru că în Java este comportament default ca un nume de parametru să ascundă numele unui câmp.
+În general, cuvântul cheie ''this'' este utilizat pentru: 
 
-În general, cuvântul cheie ''this'' este utilizat pentru:
-
-* a se face ''diferenta'' între câmpuri ale obiectului curent și argumente care au același nume
+* a se face ''diferenta'' între câmpuri ale obiectului curent și argumente care au același nume 
 * a pasa ca ''argument'' unei metode o referință către obiectul curent (vezi linia (1) din exemplul următor)
-* a facilita apelarea ''constructorilor'' din alți constructori, evitându-se astfel replicarea unor bucăți de cod (vezi exemplul de la constructori)
+* a facilita apelarea ''constructorilor'' din alți constructori, evitându-se astfel replicarea unor bucăți de cod (vezi exemplul de la constructori) 
 
-Iată un exemplu în care vom extinde clasa ''Student'' pentru a cunoaște grupa din care face parte:
+Iată un exemplu în care vom extinde clasa ''Student'' pentru a cunoaște grupa din care face parte: 
 
-<code java5 Grupa.java>
+<code java5 Group.java>
 class Group {
 
     private int numberStudents;
@@ -260,9 +259,9 @@ class Group {
             students[numberStudents++] = new Student(this, name, grade); // (1)
             return true;
         }
+        
         return false;
     }
-
 }
 </code>
 
@@ -278,7 +277,6 @@ class Student {
         this.name         = name;
         this.averageGrade = averageGrade;
     }
-
 }
 </code>
 
@@ -288,7 +286,7 @@ Variabilele declarate cu atributul ''final'' pot fi inițializate **o singură d
 
 Totuși, obiectul către care punctează o astfel de variabilă poate fi modificat intern, prin apeluri de metode sau acces la câmpuri.
 
-Exemplu:
+Exemplu: 
 
 <code java5>
 class Student {
@@ -300,7 +298,6 @@ class Student {
         // reference initialization; any other attempt to initialize it will be an error
         this.group = group;
     }
-
 }
 </code>
 
@@ -349,8 +346,8 @@ Reţineţi semnătura acestei metode!
 
 După cum am putut observa până acum, de fiecare dată când cream o instanță a unei clase, valorile câmpurilor din cadrul instanței sunt unice pentru aceasta și pot fi utilizate fără pericolul ca instaţierile următoare să le modifice în mod implicit.
 
-Să exemplificăm aceasta:
-
+Să exemplificăm aceasta: 
+ 
 <code java5>
 Student instance1 = new Student("Alice", 7);
 Student instance2 = new Student("Bob", 6);
@@ -358,9 +355,9 @@ Student instance2 = new Student("Bob", 6);
 
 În urma acestor apeluri, ''instance1'' și ''instance2'' vor funcționa ca entități independente una de cealaltă, astfel că modificarea câmpului ''nume'' din ''instance1'' nu va avea nici un efect implicit și automat în ''instance2''. Există însă posibilitatea ca uneori, anumite câmpuri din cadrul unei clase să aibă valori independente de instanțele acelei clase (cum este cazul câmpului ''UNIVERSITY_CODE''), astfel că acestea nu trebuie memorate separat pentru fiecare instanță.
 
-Aceste câmpuri se declară cu atributul **static** și au o locație unică în memorie, care nu depinde de obiectele create din clasa respectivă.
+Aceste câmpuri se declară cu atributul **static** și au o locație unică în memorie, care nu depinde de obiectele create din clasa respectivă. 
 
-Pentru a accesa un câmp static al unei clase (presupunând că acesta nu are specificatorul ''private''), se face referire la clasa din care provine, nu la vreo instanță. Același mecanism este disponibil și în cazul metodelor, așa cum putem vedea în continuare:
+Pentru a accesa un câmp static al unei clase (presupunând că acesta nu are specificatorul ''private''), se face referire la clasa din care provine, nu la vreo instanță. Același mecanism este disponibil și în cazul metodelor, așa cum putem vedea în continuare: 
 
 <code java5>
 class ClassWithStatics {
@@ -371,7 +368,6 @@ class ClassWithStatics {
     public static boolean getStaticFields() {
          return hasStaticFields;
     }
-
 }
 
 class Test {
@@ -380,8 +376,7 @@ class Test {
         System.out.println(ClassWithStatics.className);
         System.out.println(ClassWithStatics.getStaticFields());
     }
-
-}
+}  
 </code>
 == Exerciții ==
 
@@ -391,61 +386,61 @@ Exercițiile se rezolvă în ordine.
 
 </note>
 
-  - (**1p**) Să se implementeze o clasă ''Point'' care să conțină:
-    * un constructor care să primească cele două numere reale (de tip ''float'') ce reprezintă coordonatele.
-    * o metodă ''changeCoords'' ce primește două numere reale și modifică cele două coordonate ale punctului.
+  - (**1p**) Să se implementeze o clasă ''Point'' care să conțină: 
+    * un constructor care să primească cele două numere reale (de tip ''float'') ce reprezintă coordonatele. 
+    * o metodă ''changeCoords'' ce primește două numere reale și modifică cele două coordonate ale punctului. 
     * o funcție de afișare a unui punct astfel: ''(x, y)''.
-  - (**2p**) Să se implementeze o clasă ''Polygon'' cu următoarele:
-    * un constructor care preia ca parametru un singur număr //n// (reprezentând numărul de colțuri al poligonului) și alocă spațiu pentru puncte (un punct reprezentând o instanță a clasei ''Punct'').
-    * un constructor care preia ca parametru un vector, cu //2n// numere reale reprezentând colțurile. Acest constructor apelează constructorul de la punctul de mai sus și completează vectorul de puncte cu cele //n// instanțe ale clasei ''Punct'' obținute din parametrii primiți.
-      * La final, afișați coordonatele poligonului utilizând metodă de afișare a clasei ''Point''.
+  - (**2p**) Să se implementeze o clasă ''Polygon'' cu următoarele: 
+    * un constructor care preia ca parametru un singur număr //n// (reprezentând numărul de colțuri al poligonului) și alocă spațiu pentru puncte (un punct reprezentând o instanță a clasei ''Point''). 
+    * un constructor care preia ca parametru un vector, cu //2n// numere reale reprezentând colțurile. Acest constructor apelează constructorul de la punctul de mai sus și completează vectorul de puncte cu cele //n// instanțe ale clasei ''Point'' obținute din parametrii primiți. 
+      * La final, afișați coordonatele poligonului utilizând metodă de afișare a clasei ''Point''. 
   - (**1p**) Testați diferența de viteză introdusă de crearea de noi obiecte. Măsurați diferența între folosirea ''new Integer(2+3)'' și ''2+3'', după modelul de mai jos:
-    * <code java>
-private long run() {
-    long start = System.nanoTime();
-    f(); // function which run time we want to measure
-    return System.nanoTime() - start;
-}
-</code>
-  - (**1p**) Testați diferența de memorie utilizată între a folosi String literal și String obținut prin constructor. Construiți un vector de String. Umpleți acest vector în primă fază cu literal-ul ''"abc"'' și măsurați memoria utilizată. Apoi, umpleți vectorul cu ''new String("abc")'' și măsurați memoria utilizată. Măsurarea memoriei utilizate se poate face folosind următoarea metodă:
-    * <code java>
-public void showUsedMemory() {
-    long usedMem = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
-    System.out.println(usedMem);
-}
-</code>
-  - (**2p**) Să se implementeze o clasă ''RandomStringGenerator'' ce generează un String de o anumită lungime fixată, conținând caractere alese aleator dintr-un alfabet. Această clasă o să conțină următoarele:
+    * <code java> 
+private long run() { 
+    long start = System.nanoTime(); 
+    f(); // function which run time we want to measure 
+    return System.nanoTime() - start; 
+} 
+</code> 
+  - (**1p**) Testați diferența de memorie utilizată între a folosi String literal și String obținut prin constructor. Construiți un vector de String. Umpleți acest vector în primă fază cu literal-ul ''"abc"'' și măsurați memoria utilizată. Apoi, umpleți vectorul cu ''new Strîng("abc")'' și măsurați memoria utilizată. Măsurarea memoriei utilizate se poate face folosind următoarea metodă:
+    * <code java> 
+public void showUsedMemory() { 
+    long usedMem = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory(); 
+    System.out.println(usedMem); 
+} 
+</code> 
+  - (**2p**) Să se implementeze o clasă ''RandomStringGenerator'' ce generează un String de o anumită lungime fixată, conținând caractere alese aleator dintr-un alfabet. Această clasă o să conțină următoarele: 
     * un constructor care primește lungimea șirului și alfabetul sub formă de String. Exemplu de utilizare:
-      * <code java>
-myGenerator = new RandomStringGenerator(5, "abcdef");
-</code>
-    * o metodă ''next()'' care va returna un nou String random folosind lungimea și alfabetul primite de constructor.
+      * <code java> 
+myGenerator = new RandomStringGenerator(5, "abcdef"); 
+</code> 
+    * o metodă ''next()'' care va returna un nou String random folosind lungimea și alfabetul primite de constructor. 
       * Pentru a construi String-ul, este utilă reprezentarea sub formă de șir de caractere ''char[]'' (char array). Pentru a construi un String pornind de la un char array procedăm ca în exemplul următor:
-      * <code java>
-char[] a = {'a','b','c'};
-String s = new String(a);
-</code>
-      * Conversia unui String la char array se face apelând metoda ''toCharArray()'' a String-ului de convertit.
+      * <code java> 
+char[] a = {'a','b','c'}; 
+String s = new String(a); 
+</code> 
+      * Conversia unui String la char array se face apelând metoda ''toCharArray()'' a String-ului de convertit. 
     * Pentru a genera valori aleatoare din domeniul [0, N - 1], utilizați:
-      * <code java>
-import java.util.Random;
-Random generator = new Random();
-int value = generator.nextInt(N);
-</code>
-  - (**3p**) Să se implementeze o clasă ''PasswordMaker'' ce generează, folosind ''RandomStringGenerator'', o parolă pornind de la datele unei persoane. Această clasă o să conțină următoarele:
-    * o constantă MAGIC_NUMBER având orice valoare doriți
+      * <code java> 
+import java.util.Random; 
+Random generator = new Random(); 
+int value = generator.nextInt(N); 
+</code> 
+  - (**3p**) Să se implementeze o clasă ''PasswordMaker'' ce generează, folosind ''RandomStringGenerator'', o parolă pornind de la datele unei persoane. Această clasă o să conțină următoarele: 
+    * o constantă MAGIC_NUMBER având orice valoare doriți 
     * un String constant MAGIC_STRING, lung de minim 20 de caractere, generat random
-    * un constructor care primește: un String numit ''firstName'', un String numit ''lastName'' și un int numit ''age''
-    * o metodă ''getPassword()'' care va returna parola
-      * Parola se construiește concatenand următoarele șiruri:
+    * un constructor care primește: un String numit ''firstName'', un String numit ''lastName'' și un int numit ''age'' 
+    * o metodă ''getPassword()'' care va returna parola 
+      * Parola se construiește concatenand următoarele șiruri: 
         * șirul format din ultimele ''(age % 3)'' litere din firstName
         * un șir random de lungime MAGIC_NUMBER, generat cu ''RandomStringGenerator'' și cu un alfabet obținut din 10 caractere obținute random din MAGIC_STRING
         * și șirul format prin conversia la String a numărului (age + lungimea lui lastName).
-    * Pentru subșiruri și alte metode utile consultați documentația clasei [[http://docs.oracle.com/javase/7/docs/api/java/lang/String.html | String]]
+    * Pentru subșiruri și alte metode utile consultați documentația clasei [[http://docs.oracle.com/javase/8/docs/api/java/lang/String.html | String]]
 
 == Resurse ==
 * <html><a class="media mediafile mf_pdf" href="?do=export_pdf">PDF laborator</a></html>
-* {{laboratoare:constructori-referinte:sol-constructori-referinte.zip|Soluții}}
+* **[[:laboratoare:constructori-referinte:constructori-referinte-sol.zip | Soluție]]**
 
 
 
