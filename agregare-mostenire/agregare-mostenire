@@ -291,6 +291,8 @@ Snake biting
 *   specificatorul de acces **''protected''** - specifică faptul că membrul sau metoda respectivă poate fi accesată doar din cadrul clasei înseși sau din clasele derivate din această clasă. Clasele nu pot avea acest specificator, doar membrii acestora!
 *     specificatorul de acces **''private''** - specifică faptul că membrul sau metoda respectivă poate fi accesată doar din cadrul **clasei** înseși, nu și din clasele derivate din această clasă. Clasele nu pot avea acest specificator, doar membrii acestora!
 
+Constructorii **nu** se moștenesc și pot fi apelați doar în contextul unui constructor copil. Apelurile de constructor sunt înlănțuite, ceea ce înseamnă că înainte de a se inițializa obiectul copil, mai întâi se va inițializa obiectul părinte. În cazul în care părintele este copil la rândul lui, se va înițializa părintele lui (până se va ajunge la parintele suprem -- root).
+
 În laboratorul [[http://elf.cs.pub.ro/poo/laboratoare/constructori-referinte#cuvantul-cheie-final--obiecte-immutable |Constructori și referințe]] au fost prezentate și câteva din cuvintele cheie ce pot fi puse înaintea unor membri ai claselor, sau chiar a claselor.
 
 * cuvântul cheie **''final''** 
@@ -299,6 +301,73 @@ Snake biting
   
 Pe lângă reutilizarea codului, moștenirea dă posibilitatea de a dezvolta pas cu pas o aplicație (procedeul poartă numele de //incremental development//). Astfel, putem folosi un cod deja funcțional și adaugă alt cod nou la acesta, în felul acesta izolându-se bug-urile în codul nou adăugat. Pentru mai multe informații citiți capitolul //Reusing Classes// din cartea //Thinking în Java (Bruce Eckel)// 
 
+== Suprascrierea, supraîncărcarea si ascunderea metodelor statice ==
+**Suprascrierea** presupune __înlocuirea__ funcționalității din clasa/clasele părinte pentru instanța curentă.
+**Supraîncărcarea** presupune __furnizarea__ de funcționalitate în plus, fie pentru metodele din clasa curentă, fie pentru clasa/clasele părinte.
+
+<code java>
+public class Car {
+    public void print() {
+        System.out.println("Car");
+    }
+    
+    public void init() {
+        System.out.println("Car");
+    }
+    
+    public void addGasoline() {
+        // do something
+    }
+}
+
+public class Dacia extends Car {
+    public void print() {
+        System.out.println("Dacia");
+    }
+    
+    public void init() {
+        System.out.println("Dacia");
+    }
+    
+    public void addGasoline(Integer gallons) {
+        // do something
+    }
+    
+    public void addGasoline(Double gallons) {
+        // do something
+    }
+}
+</code>
+
+Metodele dependente de instanță sunt poliformice (la runtime pot avea diferite implementări) deci ele pot fi suprascrise sau supraîncarcăte. Metoda ''print'' este **__suprascrisă__** în clasa ''Dacia'' ceea ce înseamnă că orice instanță, chiar dacă se face cast la tipul ''Car'' metoda ce se va apela va fi mereu metoda ''print'' din clasa ''Dacia''. Metoda ''addGasoline'' este **__supraîncărcată__** ceea ce înseamnă că putem executa metode cu semnături diferite dar același nume (cel mai folosit in crearea metodelor de conversie).
+
+<code java>
+Car a = new Car();
+Car b = new Dacia();
+Dacia c = new Dacia();
+Car d = null;
+
+a.print(); // prints Car
+b.print(); // prints Dacia
+c.print(); // prints Dacia
+d.print(): // throws NullPointerException
+</code>
+
+Metodele statice nu funcționează la fel ca metodele dependente de instanță, în sensul că ele nu pot fi suprascrise iar în acest caz, metoda ''Dacia.init'' ascunde metoda ''Car.init''. 
+
+<code java>
+Car a = new Car();
+Car b = new Dacia();
+Dacia c = new Dacia();
+Animal d = null;
+
+a.print(); // prints Car
+b.print(); // prints Car because the declared type of b is Car
+c.print(); // prints Dacia because the declared type of c is Dacia
+d.print(): // prints Car because the declared type of b is Car
+</code>
+
+<note warning>Apelarea metodelor statice pe instanțe este considerat bad practice</note>
 ==Cuvântul cheie super. Întrebuințări==
 
 Cuvântul cheie ''super'' se referă la instanța părinte a clasei curente. Acesta poate fi folosit în două moduri: apelând o metoda suprascrisă (//overriden//) sau apelând constructorul părinte.
@@ -382,6 +451,7 @@ Printed in Subclass constructor with no args.
 
 <note important>Invocarea constructorului părinte **trebuie** să fie prima linie dintr-un constructor al unei subclase, dacă invocarea părintelui există (se poate foarte bine să nu apelăm ''super'' din constructor).</note>
 
+<note important>Chiar dacă nu se specifică apelul metodei ''super()'', compilatorul va apela automat constructor-ul implicit al părintelui însă dacă se dorește apelarea altui constructor, apelul de ''super(args)'' respectiv este obligatoriu</note>
   
 ==Exerciții==
 
