@@ -1,8 +1,8 @@
 = Colecții =
 
-* Responsabil: [[ alexandru.razvan.c@gmail.com | Alexandru Căciulescu ]] [[ laurentiupiciu@gmail.com | Laurențiu Piciu ]]
-* Data publicării: 14.11.2015
-* Data ultimei modificări: 18.11.2016
+* Responsabil: [[ casupopandrei@gmail.com | Andrei Casu-Pop ]]
+* Data publicării: 08.10.2017
+* Data ultimei modificări: 08.10.2017
 == Collections Framework==
 În pachetul **java.util** (pachet standard din JRE) existǎ o serie de clase pe care le veti găsi folositoare.
 [[http://docs.oracle.com/javase/tutorial/collections/index.html|Collections Framework]] este o arhitectură unificată pentru reprezentarea şi manipularea colecţiilor. Ea conţine:
@@ -247,7 +247,7 @@ Explicaţii suplimentare gǎsiţi pe Java Tutorials - [[http://docs.oracle.com/j
     - Caracteristicile clasei definite sunt:
       - Cheile pot avea valori de la 0 la 10 (corespunzǎtoare mediilor posibile). Verificați acest lucru la adăugare.
       - Valoarea asociată fiecǎrei chei va fi o listǎ (''List'') care va reţine toţi studenţii cu media rotunjitǎ egalǎ cu cheia. Considerǎm cǎ un student are media rotunjitǎ 8 dacǎ media sa este în intervalul [7.50, 8.49].
-     - Implementați un [[http://docs.oracle.com/javase/8/docs/api/java/util/Comparator.html|Comparator]] pentru stabilirea ordinii cheilor. Gradebook va primi un parametru de tip ''Comparator'' în constructor și îl ca da mai departe constructorului clasei moștenite.
+     - Implementați un [[http://docs.oracle.com/javase/8/docs/api/java/util/Comparator.html|Comparator]] pentru stabilirea ordinii cheilor. Gradebook va primi un parametru de tip ''Comparator'' în constructor și îl va da mai departe constructorului clasei moștenite.
      - Definiţi în clasǎ metoda ''add(Student)'', ce va adǎuga un student în lista corespunzǎtoare mediei lui. Dacǎ, în prealabil, nu mai existǎ niciun student cu media respectivǎ (rotunjitǎ), atunci lista va fi creatǎ la cerere.
     - Testați clasa:
       - instanțiați un obiect Gradebook și adăugați in el câţiva studenţi.
