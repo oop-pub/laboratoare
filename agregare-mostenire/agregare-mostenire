@@ -367,6 +367,8 @@ c.print(); // prints Dacia because the declared type of c is Dacia
 d.print(): // prints Car because the declared type of b is Car
 </code>
 
+<note important>O să punem accent pe aceste concepte în [[laboratoare:visitor|laboratorul visitor]]</note>
+
 <note warning>Apelarea metodelor statice pe instanțe este considerat bad practice</note>
 ==Cuvântul cheie super. Întrebuințări==
 
