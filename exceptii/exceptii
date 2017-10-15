@@ -1,8 +1,8 @@
 = JUnit & Excepții =
 
-* Responsabili: Mihaela Pinzaru, Cristi Vasile
-* Data publicării: 11.12.2016
-* Data ultimei modificări: 11.12.2016
+* Responsabil: [[ casupopandrei@gmail.com | Andrei Casu-Pop ]]
+* Data publicării: 15.10.2017
+* Data ultimei modificări: 15.10.2017
 
 == Obiective ==
 
@@ -59,15 +59,15 @@ public class Student {
 
 </code>
 
-<code java Grupa.java>
+<code java Group.java>
 import java.util.ArrayList;
 import java.util.List;
 
-public class Grupa {
+public class Group {
 
     List<Student> students;
 
-    Grupa () {
+    Group () {
         students = new ArrayList<Student>();
     }
 
@@ -107,27 +107,27 @@ import org.junit.Assert;
 import org.junit.Before;
 
 public class Test {
-    private Grupa grupa;
+    private Group group;
 
     @Before
     public void setup() {
-        grupa = new Grupa();
+        group = new Group();
     }
 
     @org.junit.Test
     public void testNoStudentInGroup() {
-        Assert.assertEquals(false, grupa.areStudentsInGroup());
+        Assert.assertEquals(false, group.areStudentsInGroup());
     }
 
     @org.junit.Test
     public void testAddStudent() {
         Student st = new Student("Elena", "11");
-        grupa.addStudent(st);
+        group.addStudent(st);
 
-        Assert.assertTrue(grupa.getStudent("Elena").equals(st));
+        Assert.assertTrue(group.getStudent("Elena").equals(st));
     }
     @After void tearDown() {
-        grupa = null;
+        group = null;
     }
 
 }
