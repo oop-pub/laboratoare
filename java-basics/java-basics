@@ -23,6 +23,8 @@ Următorul pas este delimitarea entităților din cadrul unui grup, pe baza unor
     * nu poate exista o altă clasă/interfață publică în același fișier (vom vedea în laboratoarele următoare ce sunt interfețele)
   * pot exista mai multe clase în același fișier sursă, cu condiția ca **maxim una** să fie publică
 
+Pentru mai multe informații despre cum funcționează mașina virtuală de Java (JVM) precum și o aprofundare în POO și Java, consultați [[laboratoare:poo-java|acest link]].
+
 Pentru un exemplu de creare a unui proiect, adăugare de pachete și fișiere sursă, consultați [[resurse-utile:proiect-intellij-idea|acest link]] pentru IntelliJ Idea si [[resurse:proiect-eclipse|acest link]] pentru Eclipse.
 
 ==Tipuri primitive==
