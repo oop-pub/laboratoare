@@ -1,11 +1,13 @@
-package com.oop_pub.design_patterns2.game;
+package game;
 
-import com.oop_pub.design_patterns2.commands.MoveCommand;
-import com.oop_pub.design_patterns2.entities.Hero;
-import com.oop_pub.design_patterns2.factories.HeroFactory;
-import com.oop_pub.design_patterns2.observers.MapPrinter;
-import com.oop_pub.design_patterns2.observers.MonsterDiscoverer;
-import com.oop_pub.design_patterns2.observers.TreasureDiscoverer;
+import commands.MoveCommand;
+import entities.Hero;
+import entities.Hero.Direction;
+import entities.Hero.HeroType;
+import factories.HeroFactory;
+import observers.MapPrinter;
+import observers.MonsterDiscoverer;
+import observers.TreasureDiscoverer;
 
 import java.util.Scanner;
 
@@ -86,6 +88,8 @@ public class Main {
                         gs.addObserver(new MapPrinter());
                         gs.addObserver(new TreasureDiscoverer());
                         // TODO populate Monsters and add an observer for them
+                        gs.addObserver(new MonsterDiscoverer());
+                        gs.populateMonsters(4);
                         gs.populateTreasures(5);
                         gs.update();
                     }

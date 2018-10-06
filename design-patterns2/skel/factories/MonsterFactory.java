@@ -1,7 +1,7 @@
-package com.oop_pub.design_patterns2.factories;
+package factories;
 
-import com.oop_pub.design_patterns2.entities.Monster;
-import com.oop_pub.design_patterns2.entities.Treasure;
+import entities.Monster;
+import entities.Treasure;
 
 import java.util.Random;
 

@@ -1,4 +1,4 @@
-package com.oop_pub.design_patterns2.commands;
+package commands;
 
 import java.util.Stack;
 
@@ -9,6 +9,7 @@ public class CommandManager {
        - void redo()
        - void executeCommand(Command c)
        - maybe check if undo() and redo() are available ?
+             -> check GameState class, see the errors
        - keep track of the commands somehow
     */
 

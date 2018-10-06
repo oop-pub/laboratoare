@@ -1,6 +1,6 @@
-package com.oop_pub.design_patterns2.factories;
+package factories;
 
-import com.oop_pub.design_patterns2.entities.Treasure;
+import entities.Treasure;
 
 import java.util.Random;
 
@@ -42,6 +42,6 @@ public class TreasureFactory {
                 "tales of this legendary item are told in each tavern",
                 "the devourer of souls"};
 
-        return new Treasure(names[rand.nextInt(names.length)], lore[rand.nextInt(lore.length)], randomDamageType(), rand.nextInt(30) + 10);
+        return new Treasure(names[rand.nextInt(names.length)], lore[rand.nextInt(lore.length)], randomDamageType(), rand.nextInt(30) + 10, rand.nextInt(10));
     }
 }

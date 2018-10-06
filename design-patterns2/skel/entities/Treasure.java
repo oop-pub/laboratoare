@@ -1,4 +1,4 @@
-package com.oop_pub.design_patterns2.entities;
+package entities;
 
 /**
  * Class representing a "treasure". The map contains treasures that the heroes
@@ -13,12 +13,14 @@ public class Treasure {
     protected int posx, posy;
     protected DamageType dmgT;
     protected int dmg;
+    protected int hp;
 
-    public Treasure(String name, String lore, DamageType dmgT, int dmg) {
+    public Treasure(String name, String lore, DamageType dmgT, int dmg, int hp) {
         this.name = name;
         this.lore = lore;
         this.dmgT = dmgT;
         this.dmg = dmg;
+        this.hp = hp;
     }
 
     public int getPosx() {
@@ -65,6 +67,9 @@ public class Treasure {
         return dmg;
     }
 
+    public int getBoostHp() {
+    	return hp;
+    }
     public void setDmg(int dmg) {
         this.dmg = dmg;
     }

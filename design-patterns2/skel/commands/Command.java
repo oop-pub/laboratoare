@@ -1,4 +1,4 @@
-package com.oop_pub.design_patterns2.commands;
+package commands;
 
 public interface Command {
     void undo();

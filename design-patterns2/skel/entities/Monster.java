@@ -1,4 +1,4 @@
-package com.oop_pub.design_patterns2.entities;
+package entities;
 
 import java.util.Random;
 

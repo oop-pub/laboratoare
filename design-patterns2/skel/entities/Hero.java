@@ -1,10 +1,12 @@
-package com.oop_pub.design_patterns2.entities;
+package entities;
 
-import com.oop_pub.design_patterns2.game.GameState;
-import com.oop_pub.design_patterns2.strategies.Strategy;
+import game.GameState;
+import strategies.Strategy;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import entities.Treasure.DamageType;
 
 public abstract class Hero {
 
@@ -13,7 +15,9 @@ public abstract class Hero {
     protected int posx, posy;
     protected int hp;
     protected Monster target;
-    //TODO add strategy object to Hero
+    protected Strategy strategy;
+    protected DamageType damageType;
+    protected int hpBoost = 20;
 
 
     /* Hero actions */
@@ -97,6 +101,10 @@ public abstract class Hero {
 
     public boolean canAttack() {
         return this.target != null;
+    }
+    
+    public int getBaseHpBoost() {
+    	return hpBoost;
     }
 
     public enum HeroType {
