@@ -1,30 +1,39 @@
-import first.*;
-import second.*;
-import third.*;
-import fourth.*;
+import first.Task;
+import second.Container;
+import third.Strategy;
+import fourth.AbstractTaskRunner;
 
-public class Main {
+public final class Main {
+
+    private Main() { }
 
     private static final int TASK_NO = 6;
+
+    private static final int FIRST_OUT_TASK_INDEX = 0;
+    private static final int SECOND_OUT_TASK_INDEX = 3;
+    private static final int FIRST_RANDOM_OUT_TASK_INDEX = 1;
+    private static final int SECOND_RANDOM_OUT_TASK_INDEX = 5;
+    private static final int FIRST_COUNTER_OUT_TASK_INDEX = 2;
+    private static final int SECOND_COUNTER_OUT_TASK_INDEX = 4;
 
     private static Task[] taskList;
 
     private static void test1() {
         taskList = new Task[TASK_NO];
 
-        taskList[0] = new OutTask("First message task");
-        taskList[1] = new RandomOutTask();
-        taskList[2] = new CounterOutTask();
-        taskList[3] = new OutTask("Second message task");
-        taskList[4] = new CounterOutTask();
-        taskList[5] = new RandomOutTask();
+        taskList[FIRST_OUT_TASK_INDEX] = new OutTask("First message task");
+        taskList[FIRST_RANDOM_OUT_TASK_INDEX] = new RandomOutTask();
+        taskList[FIRST_COUNTER_OUT_TASK_INDEX] = new CounterOutTask();
+        taskList[SECOND_OUT_TASK_INDEX] = new OutTask("Second message task");
+        taskList[SECOND_COUNTER_OUT_TASK_INDEX] = new CounterOutTask();
+        taskList[SECOND_RANDOM_OUT_TASK_INDEX] = new RandomOutTask();
 
         for (Task task : taskList) {
             task.execute();
         }
     }
 
-    static private void testContainer(Strategy strategy) {
+    private static void testContainer(final Strategy strategy) {
         Container container = ContainerFactory.INSTANCE.createContainer(strategy);
 
         for (Task task : taskList) {
@@ -40,12 +49,12 @@ public class Main {
         System.out.println();
     }
 
-    private static void test2_3() {
+    private static void test23() {
         testContainer(Strategy.LIFO);
         testContainer(Strategy.FIFO);
     }
 
-    private static void testTaskRunner(AbstractTaskRunner taskRunner) {
+    private static void testTaskRunner(final AbstractTaskRunner taskRunner) {
         System.out.println("Testing: " + taskRunner);
 
         for (Task task : taskList) {
@@ -57,7 +66,7 @@ public class Main {
         System.out.println();
     }
 
-    private static void test4_5() {
+    private static void test4() {
         testTaskRunner(new PrintTimeTaskRunner(Strategy.LIFO));
 
         CounterTaskRunner  counterTaskRunner = new CounterTaskRunner(Strategy.FIFO);
@@ -72,14 +81,14 @@ public class Main {
         redoTaskRunner.redo();
     }
 
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         test1();
         System.out.println("------\tTEST EX 1 FINISHED\t------");
 
-        test2_3();
+        test23();
         System.out.println("------\tTEST EX 2 SI EX 3 FINISHED\t------");
 
-        test4_5();
+        test4();
         System.out.println("------\tTEST EX 4 SI EX 5 FINISHED\t------");
     }
 }
