@@ -1,9 +1,9 @@
-package com.oop_pub.design_patterns2.factories;
+package factories;
 
-import com.oop_pub.design_patterns2.entities.Hero;
-import com.oop_pub.design_patterns2.entities.Mage;
-import com.oop_pub.design_patterns2.entities.Priest;
-import com.oop_pub.design_patterns2.entities.Warrior;
+import entities.Hero;
+import entities.Mage;
+import entities.Priest;
+import entities.Warrior;
 
 public class HeroFactory {
     private static HeroFactory factory = null;

@@ -1,6 +1,8 @@
-package com.oop_pub.design_patterns2.entities;
+package entities;
 
-import com.oop_pub.design_patterns2.strategies.PriestStrategy;
+import entities.Treasure.DamageType;
+import strategies.AttackStrategy;
+import strategies.DefenseStrategy;
 
 public class Priest extends Hero {
 
@@ -11,14 +13,17 @@ public class Priest extends Hero {
         this.name = name;
         this.knowledge = i;
         this.hp = 100;
-        //TODO initialize strategy accordingly
+        this.damageType = DamageType.Poison;
     }
 
     @Override
     public void attack() {
-        // TODO check if hero can attack
-        // if it can use the strategy to attack and update Hero HP (deduct target damage)
-        // and print a message
+        // TODO check if hero can attack (at his position, there should be a monster)
+    	//       ->use canAttack() method from the base class
+    	// * choose what strategy you should use according to the Hero's HP
+    	//       -> use the Strategy object from the base class
+        // * if it can use the strategy to attack and update Hero HP (deduct target damage)
+        // * and print a message
     }
 
     @Override

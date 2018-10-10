@@ -1,12 +1,12 @@
-package com.oop_pub.design_patterns2.game;
+package game;
 
-import com.oop_pub.design_patterns2.commands.Command;
-import com.oop_pub.design_patterns2.commands.CommandManager;
-import com.oop_pub.design_patterns2.entities.Hero;
-import com.oop_pub.design_patterns2.entities.Monster;
-import com.oop_pub.design_patterns2.entities.Treasure;
-import com.oop_pub.design_patterns2.factories.MonsterFactory;
-import com.oop_pub.design_patterns2.factories.TreasureFactory;
+import commands.Command;
+import commands.CommandManager;
+import entities.Hero;
+import entities.Monster;
+import entities.Treasure;
+import factories.MonsterFactory;
+import factories.TreasureFactory;
 
 import java.util.ArrayList;
 import java.util.Observable;

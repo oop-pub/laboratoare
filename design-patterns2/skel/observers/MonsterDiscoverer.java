@@ -1,8 +1,8 @@
-package com.oop_pub.design_patterns2.observers;
+package observers;
 
-import com.oop_pub.design_patterns2.entities.Hero;
-import com.oop_pub.design_patterns2.entities.Monster;
-import com.oop_pub.design_patterns2.game.GameState;
+import entities.Hero;
+import entities.Monster;
+import game.GameState;
 
 import java.util.Observable;
 import java.util.Observer;
