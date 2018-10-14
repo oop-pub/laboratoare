@@ -1,8 +1,5 @@
 = Agregare și moștenire =
 
-* Responsabili: Laurențiu Stamate
-* Data publicării: 07.10.2017
-* Data ultimei modificări: 07.10.2017
 
 == Obiective ==
 
@@ -29,7 +26,7 @@ Agregare:
 public class Foo { 
     private Bar bar; 
     
-    // The Bar object can continue to exist even if the Foo object doesn't exist
+    // Obiectul Bar poate continua să existe chiar dacă obiectul Foo nu există
     Foo(Bar bar) {
        this.bar = bar; 
     }
@@ -49,9 +46,9 @@ class Page {
 }
 
 class Book {
-    private String title; 			// Composition
-    private Page[] pages; 			// Composition
-    private LibraryRow libraryRow = null; 	// Aggregation
+    private String title; 			// Compoziţie
+    private Page[] pages; 			// Compoziţie
+    private LibraryRow libraryRow = null; 	// Agregare
 	
     public Book(int size, String title, LibraryRow libraryRow) {
         this.libraryRow = libraryRow; 
@@ -66,7 +63,7 @@ class Book {
 }
 
 class LibraryRow {
-    private String rowName = null; 		// Aggregation
+    private String rowName = null; 		// Agregare
     
     public LibraryRow(String rowName) {
         this.rowName = rowName;
@@ -79,10 +76,10 @@ class Library {
         LibraryRow row = new LibraryRow("a1");
         Book book = new Book(100, "title", row);
         
-        // After there is no reference to the Book object, the
-        // Garbage Collector will delete (at a certain time, not 
-        // necessarily immediately) that instance, but the LibraryRow
-        // object passed to the constructor is not affected.
+        // După ce nu mai există nici o referință la obiectul Carte,
+        // Garbage Collector-ul va șterge (la un moment dat, nu 
+        // neapărat imediat) acea instanță, dar obiectul LibraryRow
+        // transmis constructorului nu este afectat.
         
         book = null;
     }
@@ -142,14 +139,14 @@ class Instrument {
     }
 } 
 
-// Wind objects are instruments
-// because they have the same interface:
+// Obiectele Wind sunt instrumente
+// deoarece au aceeași interfață:
 public class Wind extends Instrument {
     public static void main(String[] args) {
         Wind flute = new Wind();
-        Instrument.tune(flute); // !! Upcasting automatically because the method
-                                // gets an Instrument object, not a Wind object
-                                // So it would be redundant to make an explicit cast like
+        Instrument.tune(flute); // !! Upcasting automat pentru că metoda primește
+                                // un obiect de tip Instrument, nu un obiect de tip Wind
+                                // Deci ar fi redundant să faci un cast explicit cum ar fi:
                                 // Instrument.tune((Instrument) flute)
     }
 }
@@ -189,8 +186,8 @@ class Test {
     public static void main(String[] args) {
         Animal a [] = new Animal[2];
         
-        a[0] = new Wolf();    // Upcasting automatically
-        a[1] = new Snake();   // Upcasting automatically
+        a[0] = new Wolf();    // Upcasting automat
+        a[1] = new Snake();   // Upcasting automat
 
         for (int i = 0; i < a.length; i++) {
             a[i].eat(); // 1
@@ -234,13 +231,13 @@ class Animal {
     }
     
     public void action() {
-        // we need this method because we will create a vector
-        // of Animal instances and we will call this method on them
+        // avem nevoie de această metodă deoarece vom crea un vector
+        // cu instanțe Animal și vom apela această metodă pe ele
     }
 }
 
 class Wolf extends Animal {
-    public void action() {    // we call it howl in action
+    public void action() {
         System.out.println("Wolf howling");
     }
 
@@ -250,7 +247,7 @@ class Wolf extends Animal {
 }
 
 class Snake extends Animal {
-    public void action() {    // we call it bite in action
+    public void action() {
         System.out.println("Snake biting");
     }
 }
@@ -265,10 +262,10 @@ class Test {
         for (int i = 0; i < a.length; i++) {
             a[i].eat();
             
-            // now that they are called the same, we can call the action method
-            // from the Animal class (notice why it was a need to define the 
-            // action method in the Animal class), and the appropriate method
-            // will be called for the actual type of a[i] instance
+            // acum că ele sunt numite la fel, putem apela metoda action
+            // din clasa Animal (observați de ce a fost nevoie să definim
+            // metoda action în clasa Animal), iar metoda corespunzătoare
+            // va fi apelată pentru tipul specific al instanței a[i]
             
             a[i].action();
         }
@@ -302,8 +299,8 @@ Constructorii **nu** se moștenesc și pot fi apelați doar în contextul unui c
 Pe lângă reutilizarea codului, moștenirea dă posibilitatea de a dezvolta pas cu pas o aplicație (procedeul poartă numele de //incremental development//). Astfel, putem folosi un cod deja funcțional și adaugă alt cod nou la acesta, în felul acesta izolându-se bug-urile în codul nou adăugat. Pentru mai multe informații citiți capitolul //Reusing Classes// din cartea //Thinking în Java (Bruce Eckel)// 
 
 == Suprascrierea, supraîncărcarea si ascunderea metodelor statice ==
-**Suprascrierea** presupune __înlocuirea__ funcționalității din clasa/clasele părinte pentru instanța curentă.
-**Supraîncărcarea** presupune __furnizarea__ de funcționalitate în plus, fie pentru metodele din clasa curentă, fie pentru clasa/clasele părinte.
+**Suprascrierea** (//overriding//) presupune __înlocuirea__ funcționalității din clasa/clasele părinte pentru instanța curentă.
+**Supraîncărcarea** (//overloading//) presupune __furnizarea__ de funcționalitate în plus, fie pentru metodele din clasa curentă, fie pentru clasa/clasele părinte.
 
 <code java>
 public class Car {
@@ -320,7 +317,7 @@ public class Car {
     }
 }
 
-public class Dacia extends Car {
+class Dacia extends Car {
     public void print() {
         System.out.println("Dacia");
     }
@@ -339,7 +336,7 @@ public class Dacia extends Car {
 }
 </code>
 
-Metodele dependente de instanță sunt poliformice (la runtime pot avea diferite implementări) deci ele pot fi suprascrise sau supraîncarcăte. Metoda ''print'' este **__suprascrisă__** în clasa ''Dacia'' ceea ce înseamnă că orice instanță, chiar dacă se face cast la tipul ''Car'' metoda ce se va apela va fi mereu metoda ''print'' din clasa ''Dacia''. Metoda ''addGasoline'' este **__supraîncărcată__** ceea ce înseamnă că putem executa metode cu semnături diferite dar același nume (cel mai folosit in crearea metodelor de conversie).
+Metodele dependente de instanță sunt polimorfice (la runtime pot avea diferite implementări) deci ele pot fi suprascrise sau supraîncarcăte. Metoda ''print'' este **__suprascrisă__** în clasa ''Dacia'' ceea ce înseamnă că orice instanță, chiar dacă se face cast la tipul ''Car'' metoda ce se va apela va fi mereu metoda ''print'' din clasa ''Dacia''. Metoda ''addGasoline'' este **__supraîncărcată__** ceea ce înseamnă că putem executa metode cu semnături diferite dar același nume (cel mai folosit in crearea metodelor de conversie).
 
 <code java>
 Car a = new Car();
@@ -347,29 +344,86 @@ Car b = new Dacia();
 Dacia c = new Dacia();
 Car d = null;
 
-a.print(); // prints Car
-b.print(); // prints Dacia
-c.print(); // prints Dacia
-d.print(): // throws NullPointerException
+a.print(); // afișează Car
+b.print(); // afișează Dacia
+c.print(); // afișează Dacia
+d.print(); // aruncă NullPointerException
 </code>
 
-Metodele statice nu funcționează la fel ca metodele dependente de instanță, în sensul că ele nu pot fi suprascrise iar în acest caz, metoda ''Dacia.init'' ascunde metoda ''Car.init''. 
+Suprascrierea nu se aplică și metodelor statice pentru că ele nu sunt dependente de instanță. Dacă în exemplul de mai sus facem metodele print din Car și din Dacia statice, rezultatul va fi următorul:
 
 <code java>
 Car a = new Car();
 Car b = new Dacia();
 Dacia c = new Dacia();
-Animal d = null;
+Car d = null;
 
-a.print(); // prints Car
-b.print(); // prints Car because the declared type of b is Car
-c.print(); // prints Dacia because the declared type of c is Dacia
-d.print(): // prints Car because the declared type of b is Car
+a.print(); // afișează Car
+b.print(); // afișează Car pentru că tipul dat la inițializare al lui b este Car
+c.print(); // afișează Dacia pentru că tipul dat la inițializare al lui c este  Dacia
+d.print(): // afișează Car pentru că tipul dat la inițializare al lui b este Car
 </code>
 
 <note important>O să punem accent pe aceste concepte în [[laboratoare:visitor|laboratorul visitor]]</note>
 
-<note warning>Apelarea metodelor statice pe instanțe este considerat bad practice</note>
+<note warning>Sintaxa Java permite apelarea metodelor statice pe instanțe (e.g. a.print în loc de Car.print), dar acest lucru este considerat bad practice pentru că poate îngreuna înțelegerea codului.</note>
+
+===Suprascrierea corecta a metodei equals(Object o)===
+
+Una din problemele cele mai des întâlnite este suprascrierea corectă a metodei //equals//. Mai jos putem vedea un exemplu de suprascriere incorectă a acestei metode.
+
+<code java>
+public class Car {
+    public boolean equals(Car c) {
+        System.out.println("Car");
+        return true;
+    }
+    
+    public boolean equals(Object o) {
+        System.out.println("Object");
+        return false;
+    }
+}
+</code>
+
+Prima metodă este o **supraîncărcare** a metodei equals iar a doua metodă este **suprascrierea** metodei equals.
+
+<code java>
+Car a = new Car();
+Dacia b = new Dacia();
+Int c = new Int(10);
+
+a.print(); // afișează Car
+b.print(); // afișează Car deoarece se face upcasting de la Dacia la Car
+c.print(); // afișează Object deoarece se face upcasting de la Int la Object
+</code>
+
+Problema care se poate observa este că putem pasa ca argumente metodei equals si tipuri de date diferite de ''Car'', lucru ce ar putea arunca excepții de cast sau când vrem să accesăm anumite proprietăți din instanță. Mai jos este modul corect de suprascrie metoda equals.
+
+<code java>
+public class Car {
+    public boolean equals(Car c)
+    {
+        return true;
+    }
+
+    public boolean equals(Object o)
+    {
+        if (o == this) {
+            return true;
+        }
+
+        if (!(o instanceof Car)) {
+            return false;
+        }
+
+        return equals((Car) o);
+    }
+}
+</code>
+
+De reținut că folosirea ''instanceof'' nu este recomandată, însă în acest caz este singurul mod prin care ne putem asigura ca instanța de obiect trimisă metodei este de tip ''Car''.
+
 ==Cuvântul cheie super. Întrebuințări==
 
 Cuvântul cheie ''super'' se referă la instanța părinte a clasei curente. Acesta poate fi folosit în două moduri: apelând o metoda suprascrisă (//overriden//) sau apelând constructorul părinte.
@@ -388,7 +442,7 @@ public class Subclass extends Superclass {
 
     // overrides printMethod in Superclass
     public void printMethod() {
-        super.printMethod();  // calls the parent method
+        super.printMethod();  // apelează metoda părinte
         
         System.out.println("Printed in Subclass.");
     }
@@ -422,15 +476,15 @@ class Superclass {
 
 class Subclass extends Superclass {
     public Subclass() {
-        super();    // calls the parent constructor
-                    // this call must be on the first line !!
+        super();    // apelează constructorul părinte
+                    // acest apel trebuie să fie pe prima linie a constructorului !!
                     
         System.out.println("Printed in Subclass constructor with no args.");
     }
     
     public Subclass(int a) {
-        super(a);   // calls the parent constructor
-                    // this call must be on the first line !!
+        super(a);   // apelează constructorul părinte
+                    // acest apel trebuie să fie pe prima linie a constructorului !!
                     
         System.out.println("Printed in Subclass constructor with one integer argument.");
     }
