@@ -432,11 +432,7 @@ Visitor este de obicei utilizat pentru structuri arborescente de obiecte:
   * conceptul de [[laboratoare:tutorial-doubledispatch|double dispatch]]
 
 == Exerciţii ==
-  - **(1p)** Fișierul //Examples// din scheletul de laborator conține exemple de overriding și overloading. Modificați codul din el astfel încât să poată fi compilat. Observați output-ul.
-    - Cum vă explicați output-ul ''Constructor A, s = hi this = B@5ad557c2'' ? Revedeți [[.:visitor#overriding|nota din sectiunea Overriding]] pentru o explicație.
-    - Ce va afișa apelul ''c.f()''? (gândiți-vă voi fără să rulați)
-    - Care 2 linii le afișează ''new Examples().test(a2);'' și de ce?
-  - **(1p)** Scheletul de laborator conține implementarea folosind pattern-ul Visitor a scenariului Employee-Manager descris [[.:visitor#scenariu-visitor| mai sus]]. Spre deosebire de exemplele din laborator, clasa Employee conține și câmpul extraHours, relevant pentru exercițiul 3.
+  - **(2p)** Scheletul de laborator conține implementarea folosind pattern-ul Visitor a scenariului Employee-Manager descris [[.:visitor#scenariu-visitor| mai sus]]. Spre deosebire de exemplele din laborator, clasa Employee conține și câmpul extraHours, relevant pentru exercițiul 3.
          * a) Rulați codul și observați comportamentul și interacțiunea dintre obiectele vizitate și obiectul de tip Visitor.
          * b) Nu mai suprascrieți metoda ''accept'' din //Manager//, rulați și explicați rezultatul execuției.
   - **(5p)** Obiectele Employee-Manager pot fi reprezentate printr-o structură arborescentă, ce are ca rădăcină un Manager (ceo-ul). Creați un Visitor care să permită parcurgerea ierarhiei și efectuarea unei acțiuni pe fiecare nod. Acea acțiune este practic o operație, implementată într-o altă clasă de tip Visitor, deci TreeVisitor-ul va primi un obiect de tip Visitor pe care să îl aplice pe nodurile parcurse.
@@ -449,6 +445,7 @@ Visitor este de obicei utilizat pentru structuri arborescente de obiecte:
        * modificați clasele existente deja, pentru a lua în considerare și obiectele Intern
        * testați operațiile de la exercițiile anterioare pe o colecție care conține și obiecte Intern
        * :!: Observați modificările pe care le-ați efectuat pentru a adăuga o nouă operație (ex. 2) și pe cele pentru a adăuga un nou tip de obiect în colecție. Ca să merite să aplicăm pattern-ul Visitor, ce situație ar trebui să fie evitată?
+       {{:laboratoare:visitor:employee-manager-visitor.jpg?500|}}
    - **(bonus - 2p)** Găsiți folosind java.nio toate fișierele cu extensia ".class" dintr-un director.
        * implementați un [[http://docs.oracle.com/javase/8/docs/api/index.html?java/nio/file/FileVisitor.html | FileVisitor]], extinzând [[http://docs.oracle.com/javase/8/docs/api/java/nio/file/SimpleFileVisitor.html | SimpleFileVisitor]] în care suprascrieți metoda de vizitare a fișierelor
         * un exemplu similar găsiți în [[http://docs.oracle.com/javase/tutorial/essential/io/walk.html | acest tutorial]]
