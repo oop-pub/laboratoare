@@ -1,8 +1,5 @@
 = More OOP & Visitor pattern =
 
-* Responsabil: [[p31andrei@gmail.com |Andrei Petre]], [[andrei.vasiliu2211@gmail.com|Andrei Vasiliu]]
-* Data ultimei modificări: 12.11.2016
-
 == Obiective ==
 
 Scopul acestui laborator este aprofundarea noțiunilor de programare orientată pe obiecte întalnite in laboratoarele precedente, prezentarea design pattern-ului Visitor și familiarizarea cu situațiile în care acesta este util de aplicat.
@@ -163,7 +160,7 @@ Rescriem metoda ''purr()'' din clasa ''GrumpyCat'' astfel:
 <code java>
 @Override
 public void purr() {
-    super.purr()
+    super.purr();
     System.out.println("NO!");
 }
 </code>
@@ -222,7 +219,7 @@ Pentru a înţelege mai bine motivaţia din spatele design-pattern-ului //Visito
 
 ==== Before ====
 
-Fie ierarhia de mai jos, ce defineşte un angajat (//Employee//) şi un şef (//Boss//), văzut, de asemenea, ca un angajat:
+Fie ierarhia de mai jos, ce defineşte un angajat (//Employee//) şi un şef (//Manager//), văzut, de asemenea, ca un angajat:
 
 <code java Test.java>
 class Employee {
@@ -239,9 +236,9 @@ class Employee {
                 return salary;
         }
 }
-class Boss extends Employee {
+class Manager extends Employee {
         float bonus;
-        public Boss(String name, float salary) {
+        public Manager(String name, float salary) {
                 super(name, salary);
                 bonus = 0;
         }
@@ -254,11 +251,11 @@ class Boss extends Employee {
 }
 public class Test {
         public static void main(String[] args) {
-                Boss boss;
+                Manager manager;
                 List<Employee> employees = new LinkedList<Employee>();
                 employees.add(new Employee("Alice", 20));
-                employees.add(boss = new Boss("Bob", 1000));
-                boss.setBonus(100);
+                employees.add(manager= new Manager("Bob", 1000));
+                manager.setBonus(100);
         }
 }
 </code>
@@ -276,7 +273,7 @@ class Employee {
                 return salary;
         }
 }
-class Boss extends Employee {
+class Manager extends Employee {
         ...
         public float getTotalRevenue() {
                 return salary + bonus;
@@ -284,8 +281,8 @@ class Boss extends Employee {
 }
 </code>
 
-Acum ne interesează să calulăm //procentul mediu// pe care îl reprezintă bonusul din venitul şefilor, luându-se în considerare doar bonusurile pozitive. Avem două posibilităţi:
-  * Definim câte o metodă, //getBonusPercentage()//, care în //Employee// întoarce mereu 0, iar în //Boss// raportul real. **Dezavantajul** constă în adăugarea în interfeţe a unor funcţii prea specializate, de detalii ce ţin doar de unele implementări ale acestora.
+Acum ne interesează să calculăm //procentul mediu// pe care îl reprezintă bonusul din venitul şefilor, luându-se în considerare doar bonusurile pozitive. Avem două posibilităţi:
+  * Definim câte o metodă, //getBonusPercentage()//, care în //Employee// întoarce mereu 0, iar în //Manager// raportul real. **Dezavantajul** constă în adăugarea în interfeţe a unor funcţii prea specializate, de detalii ce ţin doar de unele implementări ale acestora.
   * Parcurgem lista de angajaţi, //testăm//, la fiecare pas, tipul angajatului, folosind ''instanceof'', şi calculăm, doar pentru şefi, raportul solicitat. **Dezavantajul** este tratarea într-o manieră //neuniformă// a structurii noastre, cu evidenţierea particularităţilor fiecărei clase.
 
 Datorită acestor particularităţi (în cazul nostru, modalităţile de calcul al venitului, respectiv procentului mediu), constatăm că ar fi foarte utilă **izolarea implementărilor specifice** ale algoritmului (în cazul nostru, scrierea unei funcţii în fiecare clasă). Acest lucru conduce, însă, la introducerea unei metode noi în //fiecare// din clasele antrenate in prelucrări, de fiecare dată cand vrem să punem la dispoziţie o nouă operaţie. Obţinem următoarele dezavantaje:
@@ -293,15 +290,15 @@ Datorită acestor particularităţi (în cazul nostru, modalităţile de calcul 
   * codul din interiorul clasei (care servea functionalităţii primare a acesteia) va fi amestecat cu cel necesar algoritmilor de prelucrare, devenind mai greu de parcurs şi întreţinut
   * în cazul în care nu avem acces la codul claselor, singura modalitate de adăugare de funcţionalitate este extinderea
 
-În final, tragem concluzia că este de dorit să **izolăm algoritmii de clasele pe care le prelucrează**. O primă idee se referă la utilizarea //metodelor statice//. Dezavantajul acestora este că nu pot reţine, într-un mod elegant, informaţie de stare din timpul prelucrării. De exemplu, dacă structura noastră ar fi arborescentă (recursivă), în sensul că o instanţă //Boss// ar putea ţine referinţe la alte instanţe //Boss//, ce reprezintă şefii ierarhic inferiori, o funcţie de prelucrare ar trebui să menţină o informaţie parţială de stare (precum suma procentelor calculate până într-un anumit moment) sub forma unor parametri furnizaţi apelului recursiv:
+În final, tragem concluzia că este de dorit să **izolăm algoritmii de clasele pe care le prelucrează**. O primă idee se referă la utilizarea //metodelor statice//. Dezavantajul acestora este că nu pot reţine, într-un mod elegant, informaţie de stare din timpul prelucrării. De exemplu, dacă structura noastră ar fi arborescentă (recursivă), în sensul că o instanţă //Manager// ar putea ţine referinţe la alte instanţe //Manager//, ce reprezintă şefii ierarhic inferiori, o funcţie de prelucrare ar trebui să menţină o informaţie parţială de stare (precum suma procentelor calculate până într-un anumit moment) sub forma unor parametri furnizaţi apelului recursiv:
 <code java>
-class Boss extends Employee {
+class Manager extends Employee {
         ...
         public float getPercentage(float sum, int n) {
                 float f = bonus / getTotalRevenue();
                 if (f > 0)
-                        return inferiorBoss.getPercentage(sum + f, n + 1); // trimite mai departe cererea catre nivelul inferior
-                return inferiorBoss.getPercentage(sum, n);
+                        return inferiorManager.getPercentage(sum + f, n + 1); // trimite mai departe cererea catre nivelul inferior
+                return inferiorManager.getPercentage(sum, n);
         }
 }
 </code>
@@ -311,12 +308,12 @@ O abordare mai bună ar fi:
   * definirea unor **clase algoritm** care vor __//**vizita**//__ structura noastră de date, vor //efectua// prelucrările specifice fiecărei clase, având, totodată, //posibilitatea de încapsulare a unor informaţii de stare// (cum sunt suma şi numărul din exemplul anterior)
 
 ==== After ====
-Conform observațiilor precedente, structura programului Employee-Boss devine:
+Conform observațiilor precedente, structura programului Employee-Manager devine:
 
 <code java Test.java>
 interface Visitor {
-        public void visit(Employee e);
-        public void visit(Boss b);
+        public void visit(Employee employee);
+        public void visit(Manager manager);
 }
 interface Visitable {
         public void accept(Visitor v);
@@ -327,7 +324,7 @@ class Employee implements Visitable {
                 v.visit(this);
         }
 }
-class Boss extends Employee {
+class Manager extends Employee {
         ...
         public void accept(Visitor v) {
                 v.visit(this);
@@ -346,11 +343,11 @@ public class Test {
 Iată cum poate arăta un vizitator ce determină venitul total al fiecărui angajat şi îl afişează:
 <code java RevenueVisitor.java>
 public class RevenueVisitor implements Visitor {
-        public void visit(Employee e) {
-                System.out.println(e.getName() + " " + e.getSalary());
+        public void visit(Employee employee) {
+                System.out.println(employee.getName() + " " + employee.getSalary());
         }
-        public void visit(Boss b) {
-                System.out.println(b.getName() + " " + (b.getSalary() + b.getBonus()));
+        public void visit(Manager manager) {
+                System.out.println(manager.getName() + " " + (manager.getSalary() + manager.getBonus()));
         }
 }
 </code>
@@ -363,12 +360,12 @@ Secvenţele de cod de mai sus definesc:
 
 În exemplul de mai sus, putem identifica :
   * Element - Visitable
-  * ConcreteElement - Employee, Boss
+  * ConcreteElement - Employee, Manager
 
 === Double-dispatch ===
 
-Mecanismul din spatele pattern-ului Visitor poartă numele de **double-dispatch**. Acesta este un concept raspândit, şi se referă la faptul că metoda apelată este determinată la //runtime// de doi factori. În exemplul Employee-Boss, efectul vizitarii, solicitate prin apelul ''e.accept(v)'', depinde de:
-  * tipul elementului vizitat, ''e'' (//Employee// sau //Boss//), pe care se invocă metoda
+Mecanismul din spatele pattern-ului Visitor poartă numele de **double-dispatch**. Acesta este un concept raspândit, şi se referă la faptul că metoda apelată este determinată la //runtime// de doi factori. În exemplul Employee-Manager, efectul vizitarii, solicitate prin apelul ''e.accept(v)'', depinde de:
+  * tipul elementului vizitat, ''e'' (//Employee// sau //Manager//), pe care se invocă metoda
   * tipul vizitatorului, ''v'' (//RevenueVisitor//), care conţine implementările metodelor //visit//
 
 Acest lucru contrastează cu un simplu apel //e.getTotalRevenue()//, pentru care efectul este hotărât doar de tipul anagajatului. Acesta este un exemplu de **single-dispatch**.
@@ -399,11 +396,11 @@ Pattern-ul **Visitor** este util când:
 
 Visitor este de obicei utilizat pentru structuri arborescente de obiecte:
  * Parcurgerea arborilor de parsare
-     * [[http://www.eclipse.org/articles/article.php?file=Article-JavaCodeManipulation_AST/index.html | ASTVisitor]] din Eclipse JDT. Folosind [[http://help.eclipse.org/kepler/index.jsp?topic=/org.eclipse.jdt.doc.isv/reference/api/org/eclipse/jdt/core/dom/ASTParser.html.html|ASTParser]] se creează arborele de parsare al codului dat ca intrare, iar [[http://help.eclipse.org/kepler/index.jsp?topic=/org.eclipse.jdt.doc.isv/reference/api/org/eclipse/jdt/core/dom/ASTVisitor.html|ASTVisitor]] parcurge arborele, oferind metode (//preVisit//, //postVisit//, //visit//) pentru multe tipuri de noduri (MethodDeclaration, Assignment, IfStatement etc.)
+     * [[https://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.jdt.doc.isv%2Freference%2Fapi%2Forg%2Feclipse%2Fjdt%2Fcore%2Fdom%2FASTVisitor.html| ASTVisitor]] din Eclipse JDT. Folosind [[http://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.jdt.doc.isv%2Freference%2Fapi%2Forg%2Feclipse%2Fjdt%2Fcore%2Fdom%2FASTParser.html|ASTParser]] se creează arborele de parsare al codului dat ca intrare, iar [[https://help.eclipse.org/neon/index.jsp?topic=%2Forg.eclipse.jdt.doc.isv%2Freference%2Fapi%2Forg%2Feclipse%2Fjdt%2Fcore%2Fdom%2FASTVisitor.html|ASTVisitor]] parcurge arborele, oferind metode (//preVisit//, //postVisit//, //visit//) pentru multe tipuri de noduri (MethodDeclaration, Assignment, IfStatement etc.)
  * Parcurgerea și vizitarea ierarhiei de directoare și fișiere
-     * Java Nio - [[http://docs.oracle.com/javase/7/docs/api/index.html?java/nio/file/FileVisitor.html | FileVisitor]]
+     * Java Nio - [[http://docs.oracle.com/javase/8/docs/api/index.html?java/nio/file/FileVisitor.html | FileVisitor]]
         * //FileVisitor// - interfața cu metode de vizitare
-        * trebuie apelat [[http://docs.oracle.com/javase/7/docs/api/java/nio/file/Files.html#walkFileTree(java.nio.file.Path,%20java.nio.file.FileVisitor) | Files.walkFileTree]] transmițându-i ca parametru un obiect care implementează //FileVisitor//
+        * trebuie apelat [[http://docs.oracle.com/javase/8/docs/api/java/nio/file/Files.html#walkFileTree(java.nio.file.Path,%20java.nio.file.FileVisitor) | Files.walkFileTree]] transmițându-i ca parametru un obiect care implementează //FileVisitor//
         * [[http://docs.oracle.com/javase/tutorial/essential/io/walk.html | un tutorial]]
 
 == TL;DR ==
@@ -414,7 +411,8 @@ Visitor este de obicei utilizat pentru structuri arborescente de obiecte:
      * alți modificatori de acces
      * alt tip de return
      * alte excepții
-   * constructorii și metodele moștenite pot fi supraîncărcate
+   * constructorii pot fi supraîncărcati
+   * metodele moștenite pot fi supraîncărcate
 
 **Suprascrierea (overriding) ** - redefinirea metodelor moștenite
    * metoda care va fi executată este stabilită la //runtime//, pe baza tipului obiectului
@@ -434,35 +432,31 @@ Visitor este de obicei utilizat pentru structuri arborescente de obiecte:
   * conceptul de [[laboratoare:tutorial-doubledispatch|double dispatch]]
 
 == Exerciţii ==
-  - **(1p)** Fișierul //Examples// din scheletul de laborator conține exemple de overriding și overloading. Modificați codul din el astfel încât să poată fi compilat. Observați output-ul.
-    - Cum vă explicați output-ul ''Constructor A, s = hi this = B@5ad557c2'' ? Revedeți [[laboratoare:visitor#overriding|nota din sectiunea Overriding]] pentru o explicație.
-    - Ce va afișa apelul ''c.f()''? (gândiți-vă voi fără să rulați)
-    - Care 2 linii le afișează ''new Examples().test(a2);'' și de ce?
-  - **(1p)** Scheletul de laborator conține implementarea folosind pattern-ul Visitor a scenariului Employee-Boss descris [[.:visitor#scenariu-visitor| mai sus]]. Spre deosebire de exemplele din laborator, clasa Employee conține și câmpul extraHours, relevant pentru exercițiul 3.
+  - **(2p)** Scheletul de laborator conține implementarea folosind pattern-ul Visitor a scenariului Employee-Manager descris [[.:visitor#scenariu-visitor| mai sus]]. Spre deosebire de exemplele din laborator, clasa Employee conține și câmpul extraHours, relevant pentru exercițiul 3.
          * a) Rulați codul și observați comportamentul și interacțiunea dintre obiectele vizitate și obiectul de tip Visitor.
-         * b) Nu mai suprascrieți metoda ''accept'' din //Boss//, rulați și explicați rezultatul execuției.
-  - **(5p)** Obiectele Employee-Boss pot fi reprezentate printr-o structură arborescentă, ce are ca rădăcină un Boss (ceo-ul). Creați un Visitor care să permită parcurgerea ierarhiei și efectuarea unei acțiuni pe fiecare nod. Acea acțiune este practic o operație, implementată într-o altă clasă de tip Visitor, deci TreeVisitor-ul va primi un obiect de tip Visitor pe care să îl aplice pe nodurile parcurse.
-       * fiecare //Boss// va ţine referinţe către angajaţii aflaţi sub răspunderea lui directă (ce pot fi alţi șefi la rândul lor, sau salariaţi obişnuiţi)
+         * b) Nu mai suprascrieți metoda ''accept'' din //Manager//, rulați și explicați rezultatul execuției.
+  - **(5p)** Obiectele Employee-Manager pot fi reprezentate printr-o structură arborescentă, ce are ca rădăcină un Manager (ceo-ul). Creați un Visitor care să permită parcurgerea ierarhiei și efectuarea unei acțiuni pe fiecare nod. Acea acțiune este practic o operație, implementată într-o altă clasă de tip Visitor, deci TreeVisitor-ul va primi un obiect de tip Visitor pe care să îl aplice pe nodurile parcurse.
+       * fiecare //Manager// va ţine referinţe către angajaţii aflaţi sub răspunderea lui directă (ce pot fi alţi șefi la rândul lor, sau salariaţi obişnuiţi)
        * implementați un //TreeVisitor// care pentru:
              * //Employee// - aplică operația primită
-             * //Boss// - parcurge subordonații și apoi aplică operația primită pe Boss
+             * //Manager// - parcurge subordonații și apoi aplică operația primită pe Manager
        * implementați un visitor (numit //MostHardworkingEmployeeFinder//) care compară numărul mediu de ore suplimentare pentru angajați cu cel pentru șefi.
    - **(3p)** Adăugați încă un tip de obiect vizitabil - //Intern//. Acesta nu are salariu și extra hours, doar nume și durata (în luni) a internship-ului.
        * modificați clasele existente deja, pentru a lua în considerare și obiectele Intern
        * testați operațiile de la exercițiile anterioare pe o colecție care conține și obiecte Intern
        * :!: Observați modificările pe care le-ați efectuat pentru a adăuga o nouă operație (ex. 2) și pe cele pentru a adăuga un nou tip de obiect în colecție. Ca să merite să aplicăm pattern-ul Visitor, ce situație ar trebui să fie evitată?
+       {{:laboratoare:visitor:employee-manager-visitor.jpg?500|}}
    - **(bonus - 2p)** Găsiți folosind java.nio toate fișierele cu extensia ".class" dintr-un director.
-       * implementați un [[http://docs.oracle.com/javase/7/docs/api/index.html?java/nio/file/FileVisitor.html | FileVisitor]], extinzând [[http://docs.oracle.com/javase/7/docs/api/java/nio/file/SimpleFileVisitor.html | SimpleFileVisitor]] în care suprascrieți metoda de vizitare a fișierelor
+       * implementați un [[http://docs.oracle.com/javase/8/docs/api/index.html?java/nio/file/FileVisitor.html | FileVisitor]], extinzând [[http://docs.oracle.com/javase/8/docs/api/java/nio/file/SimpleFileVisitor.html | SimpleFileVisitor]] în care suprascrieți metoda de vizitare a fișierelor
         * un exemplu similar găsiți în [[http://docs.oracle.com/javase/tutorial/essential/io/walk.html | acest tutorial]]
-        * Clasele din API-ul //nio//  folosite pentru acest exercițiu sunt disponibile din [[http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html | jdk 7]].
+        * Clasele din API-ul //nio//  folosite pentru acest exercițiu sunt disponibile începând cu jdk7.
 
 == Resurse ==
 * {{.:visitor:visitor-skel.zip| Schelet cod}}
 * <html><a class="media mediafile mf_pdf" href="/poo/laboratoare/visitor?do=export_pdf">PDF laborator</a></html>
 
-
 == Referințe ==
-    - Kathy Sierra, Bert Bates. //SCJP Sun Certified Programmer for Java™ 6 - Study Guide//. Chapter 2 - Object Orientation ([[https://www.google.ro/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&ved=0CDgQFjAA&url=http%3A%2F%2Fjava.net%2Fdownloads%2Fjfjug%2FSCJP%2520Sun%2520Certified%2520Programmer%2520for%2520Java%25206-0071591060.pdf&ei=ksd-Uu_bM4jdsga9-4FI&usg=AFQjCNEIiSVtifCTRNSAsxMJeGjYZ-coqw&sig2=QvZZsy8yFFPXXUGMazse1A&bvm=bv.56146854,d.Yms&cad=rja |available online]]) - moștenire, polimorfism, overriding, overloading + exemple de întrebări
+    - Kathy Sierra, Bert Bates. //SCJP Sun Certified Programmer for Java™ 6 - Study Guide//. Chapter 2 - Object Orientation ([[http://firozstar.tripod.com/_darksiderg.pdf|available online]]) - moștenire, polimorfism, overriding, overloading + exemple de întrebări
   - Vlissides, John, et al. //Design patterns: Elements of reusable object-oriented software//. Addison-Wesley (1995)
   - [[http://en.wikipedia.org/wiki/Software_design_pattern | Clasificarea design pattern-urilor]]
   - [[laboratoare:tutorial-doubledispatch| Tutorial double-dispatch]]

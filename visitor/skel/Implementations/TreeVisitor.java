@@ -5,9 +5,11 @@ import com.oop_pub.visitor.Visitable;
 import com.oop_pub.visitor.Visitor;
 
 /**
- * Implementations for tree traversal - separate the concerns: a visitor for data
- * operations (e.g. compute average percentage) and this visitor for traversing
- * the nodes and applying the operation visitor.
+ * Clasa folosita pentru a parcurge o structura ierarhica / arborescenta - separa doua
+ * concepte: un obiect de tipul visitor ce realizeaza operatii pe un set de date
+ * (ex. calculeaza media orelor suplimentare) si acest tip de visitor (TreeVisitor)
+ * ce parcurge nodurile structurii arborescente si aplica visitor-ul ce realizeaza operatii
+ * (prezentat anterior).
  */
 public class TreeVisitor implements Visitor {
 
@@ -18,12 +20,12 @@ public class TreeVisitor implements Visitor {
     }
 
     @Override
-    public void visit(Employee e) {
+    public void visit(Employee employee) {
         //TODO
     }
 
     @Override
-    public void visit(Boss b) {
+    public void visit(Manager manager) {
         //TODO
     }
 

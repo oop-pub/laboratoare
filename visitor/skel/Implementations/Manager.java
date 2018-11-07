@@ -1,22 +1,19 @@
-package com.oop_pub.visitor.Implementations;
-
-import com.oop_pub.visitor.Visitable;
-import com.oop_pub.visitor.Visitor;
+package Implementations;
 
 import java.util.LinkedList;
 
-public class Boss extends Employee {
+public class Manager extends Employee {
     protected float bonus;
 
     private LinkedList<Visitable> subordinates = new LinkedList<Visitable>();
 
-    public Boss(String name, float salary, float bonus) {
+    public Manager(String name, float salary, float bonus) {
         super(name, salary);
 
         this.bonus = bonus;
     }
 
-    public Boss(String name, float salary, float extraHours, float bonus) {
+    public Manager(String name, float salary, float extraHours, float bonus) {
         super(name, salary, extraHours);
 
         this.bonus = bonus;
@@ -40,7 +37,7 @@ public class Boss extends Employee {
         //TODO
     }
 
-    //TODO ex1b - remove accept
+    //TODO ex1b - nu mai suprascrieti metoda accept
     @Override
     public void accept(Visitor v) {
         v.visit(this);

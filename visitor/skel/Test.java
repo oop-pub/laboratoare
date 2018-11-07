@@ -32,7 +32,7 @@ public class Test {
         List<Employee> employees = new LinkedList<Employee>();
         employees.add(new Employee("Bob", 200));
         employees.add(new Employee("Trudy", 900));
-        employees.add(new Boss("Alice", 10000, 42));
+        employees.add(new Manager("Alice", 10000, 42));
 
         Visitor v = new RevenueVisitor();
         for (Employee e : employees)
@@ -42,60 +42,59 @@ public class Test {
     private static void test2() {
         /*
          * Dr
-		 *   - Clara
-		 *   - River
-		 *   	- Amy
-		 *   	- Rory
-		 */
-        Boss ceo = new Boss("Dr", 10000, 2, 42);
-        Boss boss = new Boss("River", 9000, 7, 20);
+         *   - Clara
+         *   - River
+         *   	- Amy
+         *   	- Rory
+         */
+        Manager ceo = new Manager("Dr", 10000, 2, 42);
+        Manager manager = new Manager("River", 9000, 7, 20);
 
-        boss.addSubordinate(new Employee("Amy", 2500, 10));
-        boss.addSubordinate(new Employee("Rory", 2000, 5));
+        manager.addSubordinate(new Employee("Amy", 2500, 10));
+        manager.addSubordinate(new Employee("Rory", 2000, 5));
 
         ceo.addSubordinate(new Employee("Clara", 2200, 0));
-        ceo.addSubordinate(boss);
+        ceo.addSubordinate(manager);
 
         MostHardworkingEmployeeFinder extraHoursVisitor =
                 new MostHardworkingEmployeeFinder();
-        //TODO use MostHardworkingEmployeeFinder and TreeVisitor
-        //hint: ceo is root-node for TreeVisitor
+        //TODO folositi MostHardworkingEmployeeFinder and TreeVisitor
+        //hint: ceo este root-node pentru TreeVisitor
 
         System.out.format("The %s are the most hardworking\n",
-                extraHoursVisitor.isBossHardWorking() ? "bosses " : "employees");
+                extraHoursVisitor.isManagerHardWorking() ? "managers " : "employees");
 
-        //TODO try also other values for extraHours for the objects declared
-        //above
+        // TODO schimbati valorile din extraHours pentru obiectele declarate si observati schimbarile
     }
 
     private static void test3() {
         /*
          * Dr
-		 *   - Clara
-		 *   - River
-		 *   	- Amy
-		 *   	- Rory
-		 *   - LowlyIntern
-		 */
-        Boss ceo = new Boss("Dr", 10000, 2, 42);
-        Boss boss = new Boss("River", 9000, 7, 20);
+         *   - Clara
+         *   - River
+         *   	- Amy
+         *   	- Rory
+         *   - LowlyIntern
+         */
+        Manager ceo = new Manager("Dr", 10000, 2, 42);
+        Manager manager = new Manager("River", 9000, 7, 20);
 
-        boss.addSubordinate(new Employee("Amy", 2500, 10));
-        boss.addSubordinate(new Employee("Rory", 2000, 5));
+        manager.addSubordinate(new Employee("Amy", 2500, 10));
+        manager.addSubordinate(new Employee("Rory", 2000, 5));
 
         ceo.addSubordinate(new Employee("Clara", 2200, 0));
-        ceo.addSubordinate(boss);
+        ceo.addSubordinate(manager);
 
-        //TODO add an intern
-        //TODO apply the RevenueVisitor on ceo's subordinates
+        //TODO adaugati un intern
+        //TODO aplicati RevenueVisitr pe subordonatii lui ceo
 
         MostHardworkingEmployeeFinder extraHoursVisitor =
                 new MostHardworkingEmployeeFinder();
-        //TODO use MostHardworkingEmployeeFinder and TreeVisitor
-        //hint: ceo is root-node for TreeVisitor
+        //TODO folositi MostHardworkingEmployeeFinder and TreeVisitor
+        //hint: ceo este root-node pentru TreeVisitor
 
         System.out.format("The %s are the most hardworking\n",
-                extraHoursVisitor.isBossHardWorking() ? "bosses " : "employees");
+                extraHoursVisitor.isManagerHardWorking() ? "managers " : "employees");
     }
 
     private static void test4() {
@@ -104,7 +103,7 @@ public class Test {
         FilesCounter counter = new FilesCounter();
 
         //TODO
-        // use Files.walkFileTree
-        // get the list of files and  print its size and their paths
+        // folositi Files.walkFileTree
+        // obtineti lista fisierelor, afisati-i dimensiunea si caile catre acestea
     }
 }
