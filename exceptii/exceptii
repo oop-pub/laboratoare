@@ -288,7 +288,7 @@ Metodele suprascrise (overriden) pot arunca **numai** excepţiile specificate de
 
 {{ :laboratoare:exceptii:chain-of-responsibility.jpg?nolink |Chain-of-responsibility}}
 
-Într-o variantă a modelului standard al lanțului de responsabilitate, un handler poate acționa ca un [[laboratoare:tutorial-doubledispatch|dispatcher]], capabili să trimită comenzi în diverse direcții, formând un tree de responsabilități. În unele cazuri, acest lucru poate apărea recursiv, cu procesarea obiectelor care apelează obiecte de procesare de nivel superior cu comenzi care încearcă să rezolve o parte mai mică a problemei; în acest caz, recursiunea continuă până când comanda este procesată, sau întregul arbore a fost explorat. Un interpretor XML ar putea funcționa în acest mod.
+Într-o variantă a modelului standard al lanțului de responsabilitate, un handler poate acționa ca un [[laboratoare:tutorial-doubledispatch|dispatcher]], capabil să trimită comenzi în diverse direcții, formând un tree de responsabilități. În unele cazuri, acest lucru poate apărea recursiv, cu procesarea obiectelor care apelează obiecte de procesare de nivel superior cu comenzi care încearcă să rezolve o parte mai mică a problemei; în acest caz, recurența continuă până când comanda este procesată, sau întregul arbore a fost explorat. Un interpretor XML ar putea funcționa în acest mod.
 
 Modelul lanțului de responsabilitate este aproape identic cu modelul decoratorului, diferența fiind că pentru decorator, toate clasele se ocupă de cerere, iar pentru lanțul de responsabilitate, exact una dintre clasele din lanț se ocupă de cerere.
 
@@ -304,7 +304,7 @@ Modelul lanțului de responsabilitate este aproape identic cu modelul decoratoru
     * Care este alegerea firească: excepţii **checked** sau **unchecked**? De ce? Consideraţi că, pentru un utilizator care doreşte efectuarea de operaţii aritmetice, **singurul** mecanism disponibil este cel oferit de clasa ''Calculator''.
     * Evidenţiaţi prin teste toate cazurile posibile care generează excepţii.
   - **(2p)** Demonstraţi într-un program execuţia blocului ''finally'' chiar şi în cazul unui ''return'' din metoda.
-  - **(4p)** Dorim să implementăm un ''Logger'' pe care îl vom folosi să păstram un jurnal de evenimente a unui program
+  - **(4p)** Dorim să implementăm un ''Logger'' pe baza pattern-ului Chain-of-responsibility, definit mai sus, pe care îl vom folosi să păstram un jurnal de evenimente a unui program (vezi adaptarea în Referințe):
     - **(1p)** Creați enumerația ''LogLevel'', ce va acționa ca un [[https://docs.oracle.com/javase/8/docs/api/java/util/EnumSet.html|bitwise flag]], care va conține valorile - ''None, Info, Debug, Warning, Error, FunctionalMessage, FunctionalError''. Această enumerație va expune și o metodă statică ''All()'' care va întoarce o colecție de ''EnumSet<LogLevel>'' în care vor fi toate valorile de mai sus. [[https://www.geeksforgeeks.org/enumset-class-java/|Exemplu]] practic de folosire.
     - **(1p)** Creați o clasă abstractă ''LoggerBase'':
       - va primi pe constructor un obiect de tip ''EnumSet<LogLevel>'' care va defini pentru ce ''LogLevel'' va afisa mesajul
@@ -332,3 +332,4 @@ Modelul lanțului de responsabilitate este aproape identic cu modelul decoratoru
 * [[http://docs.oracle.com/javase/8/docs/api/java/util/NoSuchElementException.html|NoSuchElementException]]
 * [[http://docs.oracle.com/javase/8/docs/api/java/lang/OutOfMemoryError.html|OutOfMemoryError]]
 * [[http://docs.oracle.com/javase/8/docs/api/java/lang/StackOverflowError.html|StackOverflowError]]
+* [[https://en.wikipedia.org/wiki/Chain-of-responsibility_pattern#C#_example|Adaptarea exercițiului după exemplul din C#]]
