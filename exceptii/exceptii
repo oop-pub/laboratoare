@@ -304,17 +304,18 @@ Modelul lanțului de responsabilitate este aproape identic cu modelul decoratoru
     * Care este alegerea firească: excepţii **checked** sau **unchecked**? De ce? Consideraţi că, pentru un utilizator care doreşte efectuarea de operaţii aritmetice, **singurul** mecanism disponibil este cel oferit de clasa ''Calculator''.
     * Evidenţiaţi prin teste toate cazurile posibile care generează excepţii.
   - **(2p)** Demonstraţi într-un program execuţia blocului ''finally'' chiar şi în cazul unui ''return'' din metoda.
-  - **(1p)** Creați enumerația ''LogLevel'', ce va acționa ca un [[https://docs.oracle.com/javase/8/docs/api/java/util/EnumSet.html|bitwise flag]], care va conține valorile - ''None, Info, Debug, Warning, Error, FunctionalMessage, FunctionalError''. Această enumerație va expune și o metodă statică ''All()'' care va întoarce o colecție de ''EnumSet<LogLevel>'' în care vor fi toate valorile de mai sus. [[https://www.geeksforgeeks.org/enumset-class-java/|Exemplu]] practic de folosire.
-  - **(1p)** Creați o clasă abstractă ''LoggerBase'':
-    - va primi pe constructor un obiect de tip ''EnumSet<LogLevel>'' care va defini pentru ce ''LogLevel'' va afisa mesajul
-    - va expune o metodă publică ''setNext'' ce va primi un ''LoggerBase'', va întoarce ''LoggerBase'' și va seta următorul delegat din lista de responsabilitate
-    - va defini o metodă abstractă protected ''writeMessage'' ce va primi mesajul care trebuie afișat
-    - va expune o metodă publică ''message'' ce va primi mesajul care trebuie afișat și o severitate de tip ''LogLevel''. Dacă instanța de logger trebuie să afișeze mesajul pe baza colecției primite pe constructor, atunci se va apela metoda ''writeMessage'' apoi se va pasa mesajul și severitatea către următorul delegat din lista de responsabilitate (setat prin apelul ''setNext'')
-  - **(2p)** Definiți clasele de mai jos care vor extinde ''LoggerBase'' și implementa metoda ''writeMessage'':
-    - ConsoleLogger - care va scrie toate tipurile de ''LogLevel'' și va prefixa mesajele cu ''[Console] ''
-    - EmailLogger - care va scrie doar tipurile ''FunctionalMessage'' și ''FunctionalError'' și va prefixa mesajele cu ''[Email] ''
-    - FileLogger - care va scrie doar tipurile ''Warning'' și ''Error'' și va prefixa mesajele cu ''[File] ''
-    - instanțiați obiectele în clasa ''Test'' și explicați de ce obțineți rezultatul din schelet.
+  - **(4p)** Dorim să implementăm un ''Logger'' pe care îl vom folosi să păstram un jurnal de evenimente a unui program
+    - **(1p)** Creați enumerația ''LogLevel'', ce va acționa ca un [[https://docs.oracle.com/javase/8/docs/api/java/util/EnumSet.html|bitwise flag]], care va conține valorile - ''None, Info, Debug, Warning, Error, FunctionalMessage, FunctionalError''. Această enumerație va expune și o metodă statică ''All()'' care va întoarce o colecție de ''EnumSet<LogLevel>'' în care vor fi toate valorile de mai sus. [[https://www.geeksforgeeks.org/enumset-class-java/|Exemplu]] practic de folosire.
+    - **(1p)** Creați o clasă abstractă ''LoggerBase'':
+      - va primi pe constructor un obiect de tip ''EnumSet<LogLevel>'' care va defini pentru ce ''LogLevel'' va afisa mesajul
+      - va expune o metodă publică ''setNext'' ce va primi un ''LoggerBase'', va întoarce ''LoggerBase'' și va seta următorul delegat din lista de responsabilitate
+      - va defini o metodă abstractă protected ''writeMessage'' ce va primi mesajul care trebuie afișat
+      - va expune o metodă publică ''message'' ce va primi mesajul care trebuie afișat și o severitate de tip ''LogLevel''. Dacă instanța de logger trebuie să afișeze mesajul pe baza colecției primite pe constructor, atunci se va apela metoda ''writeMessage'' apoi se va pasa mesajul și severitatea către următorul delegat din lista de responsabilitate (setat prin apelul ''setNext'')
+    - **(2p)** Definiți clasele de mai jos care vor extinde ''LoggerBase'' și implementa metoda ''writeMessage'':
+      - ConsoleLogger - care va scrie toate tipurile de ''LogLevel'' și va prefixa mesajele cu ''[Console] ''
+      - EmailLogger - care va scrie doar tipurile ''FunctionalMessage'' și ''FunctionalError'' și va prefixa mesajele cu ''[Email] ''
+      - FileLogger - care va scrie doar tipurile ''Warning'' și ''Error'' și va prefixa mesajele cu ''[File] ''
+      - instanțiați obiectele în clasa ''Test'' și explicați de ce obțineți rezultatul din schelet.
 
 == Resurse ==
 
@@ -323,11 +324,11 @@ Modelul lanțului de responsabilitate este aproape identic cu modelul decoratoru
 
 == Referinţe ==
 
-* [[http://docs.oracle.com/javase/7/docs/api/java/lang/Exception.html|Exception]]
-* [[http://docs.oracle.com/javase/7/docs/api/java/lang/Error.html|Error]]
-* [[http://docs.oracle.com/javase/7/docs/api/java/lang/RuntimeException.html|RuntimeException]]
-* [[http://docs.oracle.com/javase/7/docs/api/java/lang/NullPointerException.html|NullPointerException]]
-* [[http://docs.oracle.com/javase/7/docs/api/java/lang/IndexOutOfBoundsException.html|IndexOutOfBoundsException]]
-* [[http://docs.oracle.com/javase/7/docs/api/java/util/NoSuchElementException.html|NoSuchElementException]]
-* [[http://docs.oracle.com/javase/7/docs/api/java/lang/OutOfMemoryError.html|OutOfMemoryError]]
-* [[http://docs.oracle.com/javase/7/docs/api/java/lang/StackOverflowError.html|StackOverflowError]]
+* [[http://docs.oracle.com/javase/8/docs/api/java/lang/Exception.html|Exception]]
+* [[http://docs.oracle.com/javase/8/docs/api/java/lang/Error.html|Error]]
+* [[http://docs.oracle.com/javase/8/docs/api/java/lang/RuntimeException.html|RuntimeException]]
+* [[http://docs.oracle.com/javase/8/docs/api/java/lang/NullPointerException.html|NullPointerException]]
+* [[http://docs.oracle.com/javase/8/docs/api/java/lang/IndexOutOfBoundsException.html|IndexOutOfBoundsException]]
+* [[http://docs.oracle.com/javase/8/docs/api/java/util/NoSuchElementException.html|NoSuchElementException]]
+* [[http://docs.oracle.com/javase/8/docs/api/java/lang/OutOfMemoryError.html|OutOfMemoryError]]
+* [[http://docs.oracle.com/javase/8/docs/api/java/lang/StackOverflowError.html|StackOverflowError]]
