@@ -1,6 +1,6 @@
-package com.poo.labvisitor;
+package com.poo.labvisitor.task1;
 
-import com.poo.labvisitor.document.TextSegment;
+import com.poo.labvisitor.task1.document.TextSegment;
 
 import java.util.ArrayList;
 import java.util.List;

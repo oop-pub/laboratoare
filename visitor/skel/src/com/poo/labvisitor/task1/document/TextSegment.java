@@ -1,4 +1,4 @@
-package com.poo.labvisitor.document;
+package com.poo.labvisitor.task1.document;
 
 /**
  * Represents a text segment of a document that needs to be parsed.
