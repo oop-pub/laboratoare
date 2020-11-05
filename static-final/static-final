@@ -309,5 +309,5 @@ O clasă de tip Singleton poate fi extinsă, iar metodele ei suprascrise, însă
   - (**3p**) Să se implementeze o clasă ''MyImmutableArray'' care să conțină:
     * un field ''ArrayList<Integer> immutableArray;'' neinițializat în primă fază
     * un constructor care primește un ArrayList<Integer> și copiază toate elementele din acel array în ''immutableArray''
-    * o metodă getArray implementată în așa fel încât field-ul ''immutableArray'' să rămână immutable
+    * o metodă getArray implementată în așa fel încât field-ul ''immutableArray'' să rămână immutable (Hint: [[https://docs.oracle.com/javase/8/docs/api/java/util/Collections.html#unmodifiableList-java.util.List- | Collections.unmodifiableList()]])
   - (**1p**) Testați clasa ''MyImmutableArray'' demonstrând faptul că instanțele acestei clase sunt imutabile
