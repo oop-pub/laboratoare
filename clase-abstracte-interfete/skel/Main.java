@@ -1,94 +1,115 @@
-import first.Task;
-import second.Container;
-import third.Strategy;
-import fourth.AbstractTaskRunner;
+import first.*;
+import second.*;
+import third.*;
+import fourth.*;
 
-public final class Main {
-
-    private Main() { }
+public class Main {
 
     private static final int TASK_NO = 6;
-
-    private static final int FIRST_OUT_TASK_INDEX = 0;
-    private static final int SECOND_OUT_TASK_INDEX = 3;
-    private static final int FIRST_RANDOM_OUT_TASK_INDEX = 1;
-    private static final int SECOND_RANDOM_OUT_TASK_INDEX = 5;
-    private static final int FIRST_COUNTER_OUT_TASK_INDEX = 2;
-    private static final int SECOND_COUNTER_OUT_TASK_INDEX = 4;
 
     private static Task[] taskList;
 
     private static void test1() {
         taskList = new Task[TASK_NO];
 
-        taskList[FIRST_OUT_TASK_INDEX] = new OutTask("First message task");
-        taskList[FIRST_RANDOM_OUT_TASK_INDEX] = new RandomOutTask();
-        taskList[FIRST_COUNTER_OUT_TASK_INDEX] = new CounterOutTask();
-        taskList[SECOND_OUT_TASK_INDEX] = new OutTask("Second message task");
-        taskList[SECOND_COUNTER_OUT_TASK_INDEX] = new CounterOutTask();
-        taskList[SECOND_RANDOM_OUT_TASK_INDEX] = new RandomOutTask();
+        taskList[0] = new OutTask("First message task");
+        taskList[1] = new RandomOutTask();
+        taskList[2] = new CounterOutTask();
+        taskList[3] = new OutTask("Second message task");
+        taskList[4] = new CounterOutTask();
+        taskList[5] = new RandomOutTask();
 
         for (Task task : taskList) {
             task.execute();
         }
     }
 
-    private static void testContainer(final Strategy strategy) {
-        Container container = ContainerFactory.INSTANCE.createContainer(strategy);
+    static private void test2() {
 
-        for (Task task : taskList) {
-            container.push(task);
+        System.out.println("----> Queue");
+        Queue q = new Queue();
+        for(Task task : taskList) {
+            q.push(task);
+        }
+        q.pop();
+        q.pop();
+        for (Task task : q.getTasks()) {
+            task.execute();
         }
 
-        System.out.println("Testing order: " + strategy.toString());
-
-        while (!container.isEmpty()) {
-            container.pop().execute();
+        System.out.println("----> Stack");
+        Stack s = new Stack();
+        for(Task task : taskList) {
+            s.push(task);
+        }
+        s.pop();
+        s.pop();
+        for (Task task : s.getTasks()) {
+            task.execute();
         }
 
-        System.out.println();
-    }
+        System.out.println("----> Testare metoda transferFrom");
+        q.transferFrom(s);
 
-    private static void test23() {
-        testContainer(Strategy.LIFO);
-        testContainer(Strategy.FIFO);
-    }
-
-    private static void testTaskRunner(final AbstractTaskRunner taskRunner) {
-        System.out.println("Testing: " + taskRunner);
-
-        for (Task task : taskList) {
-            taskRunner.addTask(task);
+        for (Task task : q.getTasks()) {
+            task.execute();
         }
 
-        taskRunner.executeAll();
-
-        System.out.println();
+        System.out.println(s.isEmpty()); //trebuie sa afiseze true
     }
+
+    static private void test3() {
+        Operation op = new Operation(13);
+        op.div(0);
+        op.div(1);
+        System.out.println(op.getNumber()); //13
+        op.mult(2);
+        System.out.println(op.getNumber());  //26
+        op.minus(3);
+        System.out.println(op.getNumber());  //23
+        op.plus(7);
+        System.out.println(op.getNumber()); //30
+    }
+
 
     private static void test4() {
-        testTaskRunner(new PrintTimeTaskRunner(Strategy.LIFO));
+        Song song1 = new Song("Bad", 101, "Michael Jackson");
+        Song song2 = new Song("Dangerous", 19, "Michael Jackson");
+        Song song3 = new Song("Heal the world", 53, "Composer");
+        Song song4 = new Song("Thriller", 82, "Michael Jackson" );
+        Song song5 = new Song("Beat it", 83, "Michel Jakson");
+        Song song6 = new Song("Smooth Criminal", 77, "Composer");
 
-        CounterTaskRunner  counterTaskRunner = new CounterTaskRunner(Strategy.FIFO);
+        DangerousAlbum dangerous = new DangerousAlbum();
+        dangerous.addSong(song2);
+        dangerous.addSong(song3);
+        dangerous.addSong(song6);
+        System.out.println(dangerous);
 
-        testTaskRunner(counterTaskRunner);
-        System.out.println("#Executed tasks: " + counterTaskRunner.getCounter());
+        ThrillerAlbum thriller = new ThrillerAlbum();
+        thriller.addSong(song4);
+        thriller.addSong(song6);
+        thriller.addSong(song5);
+        System.out.println(thriller);
 
-        RedoBackTaskRunner  redoTaskRunner = new RedoBackTaskRunner(Strategy.LIFO);
-
-        testTaskRunner(redoTaskRunner);
-        System.out.println("Reexecuting: ");
-        redoTaskRunner.redo();
+        BadAlbum bad = new BadAlbum();
+        bad.addSong(song1);
+        bad.addSong(song6);
+        System.out.println(bad);
     }
 
-    public static void main(final String[] args) {
+    public static void main(String[] args) {
         test1();
         System.out.println("------\tTEST EX 1 FINISHED\t------");
 
-        test23();
-        System.out.println("------\tTEST EX 2 SI EX 3 FINISHED\t------");
+        test2();
+        System.out.println("------\tTEST EX 2 FINISHED\t------");
+
+        test3();
+        System.out.println("------\tTEST EX 3 FINISHED\t------");
 
         test4();
-        System.out.println("------\tTEST EX 4 SI EX 5 FINISHED\t------");
+        System.out.println("------\tTEST EX 4 FINISHED\t------");
     }
 }
+
